@@ -1,0 +1,62 @@
+@import "../../styles/style_utils";
+
+.baner {
+  width: 100%;
+  padding-block: 52px 16px;
+
+  @include onTablet {
+    padding-block: 55px;
+  }
+
+  @include onLaptop {
+    padding-block: 100px 135px;
+  }
+
+  @include onDesktop {
+    padding-block: 135px;
+  }
+  
+  @include onLaptop {
+    background-image: url(../../img/baner-bg.png);
+    background-position: bottom;
+    background-repeat: no-repeat;
+    background-size: contain;
+  }
+  
+  &__content {    
+    @include onTablet {
+      @include pageGrid;
+    }
+  }
+  
+  &__title {
+    margin-bottom: 32px;
+  }
+
+  &__container {
+    @include halfScreen;
+    
+    &--img {
+      margin-bottom: 40px;
+
+      @include onTablet {
+        margin-bottom: 0;
+        order: 2;
+      }
+    }
+  }
+  
+  &__photo-box {
+    width: 100%; 
+    max-width: 578px;
+    background-color: #FFC996;
+    border-radius: 50%;
+  }
+  
+  &__photo {
+    border-radius: 0 0 50% 50%;
+    width: 100%;
+    display: block;
+    overflow: hidden;
+  }
+}

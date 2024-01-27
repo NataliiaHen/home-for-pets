@@ -1,0 +1,208 @@
+@import "../../styles/style_utils";
+
+.adopt-form {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  width: 100%;
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 30px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+  @include onLaptop {
+    gap: 40px;
+  }
+
+  &__title {
+    text-align: center;
+  }
+
+  &__section-title {
+    @extend %main-text;
+    margin-bottom: 1.25rem;
+    color: $primary-900;
+
+    @include onLaptop {
+      margin-bottom: 2rem;
+      font-size: 1.75rem;
+      line-height: 120%;
+    }
+  }
+
+  &__section-content {
+    display: grid;
+    row-gap: 16px;
+    column-gap: 20px;
+
+    @include onLaptop {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+  }
+
+  &__field {
+    @include onLaptop {
+      grid-column: span 2;
+
+      &--half-block {
+        grid-column: span 1; 
+      }
+
+      &:hover {
+        .adopt-form__input {
+          border-color: $blue-500;
+        }
+
+        
+      }
+    }
+  }
+
+  &__field-label {
+    @extend %main-text;
+    font-weight: 500;
+    display: flex;
+    gap: 12px;
+    margin-bottom: 0.5rem;
+    color: $primary-1200;
+
+    @include onLaptop {
+      font-size: 1.25rem;
+    }
+
+    &-icon {
+      display: block;
+    }
+    
+    &__icon-box {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 32px;
+      height: 32px;
+
+      & svg {
+        path {
+          stroke: $primary-700;
+        }
+      }
+    }
+  }
+
+  &__input {
+    width: 100%;
+    height: 42px;
+    padding: 0.5rem 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+
+    @include onLaptop {
+      height: 48px;
+    }
+
+    &--text {
+      height: 200px;
+      resize: none;
+    }
+
+    &::placeholder {
+      @extend %main-text;
+      color: $primary-400;
+
+      @include onLaptop {
+        font-size: 1.25rem;
+      }
+    }
+  }
+
+  &__photo-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+
+    @include onLaptop {
+      gap: 20px;
+    }
+
+    @include onDesktop {
+      gap: 24px;
+    }
+  }
+
+  &__button {
+    @include primaryButton;
+  }
+  
+  &__error {
+    font-size: 0.77rem;
+    margin-top: 0.5rem;
+    color: $danger;
+
+    &--right {
+      text-align: right;
+    }
+  }
+  
+  &__radio-group {
+    display: flex;
+    gap: 16px;
+
+    @include onLaptop {
+      gap: 20px;
+    }
+
+    @include onDesktop {
+      gap: 24px;
+    }
+  }
+  
+  &__radio-button-box {
+    width: 100%;
+  }
+  
+  &__radio-button {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  &__radio-label {
+    @extend %main-text;
+    display: inline-block;
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    border-radius: 6px;
+    border: 1px solid $primary-300;
+    background-color: white;
+    color: $primary-1000;
+    cursor: pointer;
+
+    @include onLaptop {
+      font-size: 1.25rem;
+      height: 48px;
+      line-height: 48px;
+    }
+  
+    &:hover {
+      background-color: $primary-300;
+      border-color: $primary-500;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+  
+    &:first-child {
+      margin-left: 0;
+    }
+  }
+
+  &__radio-button:checked + .adopt-form__radio-label {
+    border-color: $primary-600;
+    background-color: $primary-500;
+  }
+}

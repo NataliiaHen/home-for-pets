@@ -1,0 +1,9 @@
+@import "../../styles/style_utils";
+
+.logo {
+  height: 25px;
+  
+  & svg {
+    margin: 0 auto;
+  }
+}

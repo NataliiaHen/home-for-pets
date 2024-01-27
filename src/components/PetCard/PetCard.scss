@@ -1,0 +1,107 @@
+@import "../../styles/style_utils";
+
+.pet-card {
+  grid-column: span 1;
+  flex-basis: 288px;
+  flex-grow: 1;
+  box-shadow: none;
+  background-color: #fff;
+  border-radius: 5%;
+  transition: $transition;
+
+  @include hover(box-shadow, 0 3px 13px 0 rgba(23, 32, 49, 0.26));
+
+  &__name {
+    @extend %large-text;
+    margin-bottom: 12px;
+
+    @include onLaptop {
+      margin-bottom: 1rem;
+      font-size: 1.75rem;
+    }
+  }
+
+  &__img-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    min-height: 288px;
+    border-radius: 5%;
+    overflow: hidden;
+
+    @include onLaptop {
+      height: 310px;
+    }
+  }
+
+  &__link-img {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+
+  &__img {
+    display: block;
+
+    height: 100%;
+    max-width: 100%;
+
+    object-fit: cover;
+    object-position: center;
+  }
+
+  &__fav-btn {
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    height: 40px;
+    width: 40px;
+  }
+
+  &__detail {
+    padding: 24px 16px;
+  }
+
+  &__info-block {
+    margin-bottom: 24px;
+  }
+
+  &__info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    @extend %small-text;
+
+    &-text {
+      @extend %secondary-text;
+      color: $primary-1000;
+
+      @include onLaptop {
+        font-size: 1.25rem;
+      }
+    }
+
+    &:not(:last-child) {
+      margin-bottom: 8px;
+    }
+  }
+
+  &__icon-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 24px;
+    height: 24px;
+  }
+
+  &__buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+
+    & button {
+      width: 100%;
+    }
+  }
+}
