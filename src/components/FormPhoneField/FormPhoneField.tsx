@@ -11,7 +11,7 @@ type Props = {
   error?: FieldError | undefined;
   label: string;
   placeholder: string;
-}
+};
 
 export const FormPhoneField: React.FC<Props> = ({
   label,
