@@ -1,19 +1,23 @@
-import React, { memo } from 'react';
 import './AdoptBtn.scss';
-import { useAppDispatch } from '../../app/hooks';
-import { setIsModalShow } from '../../features/modal';
+import React, { memo } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 
-export const AdoptBtn: React.FC = memo(({ children }) => {
-  // const { setIsModalShow } = useContext(ModalContext);
-  const dispatch = useAppDispatch();
+interface Props {
+  id: number;
+}
+
+export const AdoptBtn: React.FC<Props> = memo(({ id, children }) => {
+  const location = useLocation();
+
+  const state = {
+    search: location.search,
+    pathname: location.pathname,
+    previousLocation: location,
+  };
 
   return (
-    <button
-      type="button"
-      className="adopt-btn"
-      onClick={() => dispatch(setIsModalShow(true))}
-    >
+    <Link to={`/adopt/${id}`} state={state} className="adopt-btn">
       {children}
-    </button>
+    </Link>
   );
 });

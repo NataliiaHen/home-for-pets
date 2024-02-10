@@ -1,7 +1,7 @@
 @import "../../styles/style_utils";
 
 .pets-list {
-  @include pageGrid;
+  @include page-grid;
   grid-template-columns: 1fr;
   justify-items: center;
 

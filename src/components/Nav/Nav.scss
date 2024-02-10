@@ -12,20 +12,13 @@
     align-items: center;
     justify-content: space-between;
     gap: 16px;
-    margin-top: 25px;
-    padding-block: 24px 8px;
+    margin-top: 1.5rem;
+    padding-block: 1.5rem 0.5rem;
     border-top: 1px solid $header-border-color;
   }
 
   &__adopt-link {
-    @include primaryButton;
-    text-align: center;
-    line-height: 42px;
-
-    & a {
-      @extend %large-text;
-      color: inherit;
-    }
+    @include primary-button;
 
     @include onLaptop {
       max-width: 170px;
@@ -35,7 +28,7 @@
   }
 
   &__filters-btn {
-    @include primaryButton;
+    @include primary-button;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -44,7 +37,7 @@
     & svg {
       path {
         align-self: center;
-        stroke: white;
+        stroke: $white;
       }
     }
   }
@@ -55,7 +48,7 @@
     align-items: center;
     height: 42px;
     width: 42px;
-    background-color: white;
+    background-color: $white;
     border-radius: 4px;
   }
 }

@@ -54,7 +54,9 @@ h2 {
 }
 
 h3 {
-  @extend %h3;
+  font-size: 2rem;
+  font-weight: 600;
+  line-height: 140%;
 }
 
 a {

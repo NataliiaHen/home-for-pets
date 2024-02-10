@@ -63,15 +63,19 @@
   &__photo-container {
     max-width: 140px;
     max-height: 140px;
+    transform: scale(1);
+    transition: all 300ms;
+
+    @include scale;
 
     @include onLaptop {
       max-width: 180px;
-      max-height: 180px;      
+      max-height: 180px;
     }
 
     @include onDesktop {
       max-width: 200px;
-      max-height: 200px;      
+      max-height: 200px;
     }
   }
 

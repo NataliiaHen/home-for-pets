@@ -1,36 +1,37 @@
-import React, { useContext, memo } from 'react';
+import React, { memo } from 'react';
 import classNames from 'classnames';
 import './ButtonHeart.scss';
 import { ReactSVG } from 'react-svg';
-import { FavContext } from '../../storage/FavContext';
-import { Product } from '../../types/Product';
+import { Pet } from '../../types/Pet';
+import { checkFav } from './utils';
+import { useAppSelector, useActions } from '../../app/hooks';
 
 type Props = {
-  // pet: Pet;
+  pet: Pet;
 };
 
-export const ButtonHeart: React.FC<Props> = memo(() => {
-  // const { favProducts, addFav, removeFav } = useContext(FavContext);
-  // const isFav = favProducts.some(prod => prod.itemId === product.itemId);
-  const isFav = false;
+export const ButtonHeart: React.FC<Props> = memo(({ pet }) => {
+  const favorites = useAppSelector(state => state.favorites);
+  const { addFav, removeFav } = useActions();
+  const isFav = checkFav(favorites, pet.id);
 
-  // const toggleFav = () => {
-  //   if (!isFav) {
-  //     addFav(product);
-  //   } else {
-  //     removeFav(product);
-  //   }
-  // };
+  const toggleFav = () => {
+    if (!isFav) {
+      addFav(pet);
+    } else {
+      removeFav(pet);
+    }
+  };
 
   return (
-    // eslint-disable-next-line jsx-a11y/control-has-associated-label
     <button
       className={classNames(
         'button-fav',
         { 'button-fav--selected': isFav },
       )}
-      // onClick={toggleFav}
+      onClick={toggleFav}
       data-cy="addToFavorite"
+      aria-label="toggle favorite"
       type="button"
     >
       <ReactSVG

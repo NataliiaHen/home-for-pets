@@ -2,16 +2,15 @@
 import { CSSTransition } from 'react-transition-group';
 import './Notification.scss';
 import React, {
-  useContext, useEffect, useRef, useState, memo,
+  useEffect, useRef, useState, memo,
 } from 'react';
-import {
-  NotificationContext,
-} from '../../storage/NotificationContext';
+import { useActions, useAppSelector } from '../../app/hooks';
 
 export const Notification: React.FC = memo(() => {
-  const { notification } = useContext(NotificationContext);
+  const notification = useAppSelector(state => state.notification);
   const [show, setShow] = useState(false);
   const firstRenderRef = useRef(true);
+  const { removeNotification } = useActions();
 
   useEffect(() => {
     if (firstRenderRef.current) {
@@ -20,15 +19,21 @@ export const Notification: React.FC = memo(() => {
       return;
     }
 
+    if (!notification.message) {
+      return;
+    }
+
     setShow(true);
 
     const timer = setTimeout(() => {
       setShow(false);
+      removeNotification();
     }, 2000);
 
     return () => {
       clearTimeout(timer);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [notification]);
 
   return (
@@ -38,12 +43,12 @@ export const Notification: React.FC = memo(() => {
       classNames="notification"
       unmountOnExit
     >
-      <div
+      <h2
         className="notification"
         style={{ color: notification.color }}
       >
         <p>{notification.message}</p>
-      </div>
+      </h2>
     </CSSTransition>
   );
 });

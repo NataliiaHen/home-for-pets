@@ -1,6 +1,8 @@
 @import "../../styles/style_utils";
 
 .pet-page {
+  @include section-gap;
+
   &__content {
     width: 100%;
   }

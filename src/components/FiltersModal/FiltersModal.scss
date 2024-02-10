@@ -10,8 +10,8 @@
   background-color: rgba(0,0,0,0.4);
   
   &__content {
-    @include contentPaddingInline;
-    padding-block: 24px;
+    @include content-padding-inline;
+    padding-block: 1.5rem;
     height: 100vh;
     width: 80%;
     background-color: white;
@@ -22,14 +22,18 @@
     justify-content: space-between;
     align-items: center;
     height: 44px;
-    padding-block: 8px;
-    margin-bottom: 24px;
+    padding-block: 0.5rem;
+    margin-bottom: 1.5rem;
   }
 
   &__title {
     @extend %large-text ;
     font-weight: 500;
-    color: $blue-700
+    color: $blue-700;
+  }
+
+  &__icon-link {
+    @include square(24px);
   }
 
   &-enter {

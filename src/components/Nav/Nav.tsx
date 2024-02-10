@@ -33,7 +33,7 @@ export const Nav: React.FC = memo(() => {
           <Logo />
 
           <div className="navbar__top-buttons">
-            {pathname === '/pets-for-adoption' ? (
+            {pathname === '/pets' ? (
               <button
                 type="button"
                 onClick={() => setIsFiltersOpen(true)}
@@ -46,9 +46,12 @@ export const Nav: React.FC = memo(() => {
                 Filters
               </button>
             ) : (
-              <div className="navbar__adopt-link">
-                <Link to="/pets-for-adoption">Adoption</Link>
-              </div>
+              <Link
+                to="/pets"
+                className="navbar__adopt-link"
+              >
+                Adoption
+              </Link>
             )}
 
             <ReactSVG
@@ -86,9 +89,17 @@ export const Nav: React.FC = memo(() => {
 
           <NavList />
 
-          <div className="navbar__adopt-link">
-            <Link to="/pets-for-adoption">Adoption</Link>
-          </div>
+          <button
+            className="navbar__adopt-link"
+            type="button"
+            disabled={pathname === '/pets'}
+          >
+            <Link
+              to="/pets"
+            >
+              Adoption
+            </Link>
+          </button>
         </>
       )}
     </nav>

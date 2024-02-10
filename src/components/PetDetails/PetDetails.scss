@@ -15,15 +15,10 @@
   }
 
   &__grid {
-    display: grid;
+    @include page-grid;
     justify-items: center;
     align-items: center;
     row-gap: 24px;
-    width: 100%;
-
-    @include onLaptop {
-      @include pageGrid;
-    }
   }
 
   &__photos {
@@ -31,8 +26,8 @@
     flex-direction: column;
     justify-items: center;
     align-items: center;
-    gap: 8px;
     max-width: 648px;
+    gap: 8px;
 
     @include onTablet {
       row-gap: 15px;
@@ -65,41 +60,40 @@
     }
   }
 
-  &__small-photo-container {
+  &__photo-container {
     border: 1px solid $primary-400;
+    border-radius: 5px;
+    overflow: hidden;
     cursor: pointer;
 
-    &--selected {
-      border-color: black;
-    }
-  }
+    @include scale;
 
-  &__small-img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    object-position: center;
-    border-radius: 5px;
+    img {
+      width: 100%;
+      height: 100%;
+    }
   }
 
   &__big-photo-container {
     position: relative;
     width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    overflow: hidden;
 
     @include onLaptop {
       max-height: 464px;
       grid-column: 3 / 13;
     }
-  }
 
-  &__big-img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    object-position: center;
-    border-radius: 8px;
+    @include onDesktop {
+      max-height: 648px;
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+    }
   }
 
   &__photo-slide-btns {
@@ -112,7 +106,7 @@
   }
 
   &__button-move {
-    @include circleButton(32px);
+    @include circle-button(32px);
   }
 
   &__info {
@@ -121,6 +115,7 @@
 
     @include onLaptop {
       grid-column: span 3;
+      align-self: start;
     }
 
     @include onDesktop {
@@ -151,7 +146,7 @@
       margin-bottom: 50px;
     }
 
-    @include onLaptop {
+    @include onDesktop {
       column-gap: 24px;
       margin-bottom: 60px;
     }
@@ -168,6 +163,10 @@
       &--big {
         grid-column: span 2;
       }
+    }
+
+    @include onLaptop {
+      grid-column: span 2;
     }
 
     &-title {
@@ -188,7 +187,7 @@
   }
 
   &__button {
-    @include primaryButton;
+    @include primary-button;
     width: 100%;
   }
 
@@ -197,9 +196,9 @@
     flex-grow: 2;
     flex-basis: auto;
     flex-direction: column;
-    gap: 12px;
     justify-content: center;
     align-items: center;
+    gap: 12px;
     height: 100%;
 
     &-description {

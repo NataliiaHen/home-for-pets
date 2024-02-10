@@ -2,43 +2,19 @@
 
 body {
   .page {
+    display: flex;
+    flex-direction: column;
     width: 100%;
     min-height: 100vh;
-    background-color: $secondary-50;
+    background-color: $page-bg;
     
     &__content {
       padding-block: 50px 80px;
+      flex-grow: 3;
+      height: 100%;
 
       @include onLaptop {
         padding-block-end: 184px;
-      }
-    }
-
-    // &__content {
-    //   padding-block: 32px 80px;
-
-    //   @include onLaptop {
-    //     padding-block: 95px 184px;
-    //   }
-
-    //   @include onDesktop {
-    //     padding-block-start: 136px;
-    //   }
-    // }
-  
-    &__section {
-      margin-bottom: 40px;
-
-      @include onTablet {
-        margin-bottom: 60px;
-      }
-
-      @include onLaptop {
-        margin-bottom: 100px;
-      }
-
-      @include onDesktop {
-        margin-bottom: 136px;
       }
     }
   }

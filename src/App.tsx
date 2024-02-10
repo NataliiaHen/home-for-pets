@@ -5,10 +5,9 @@ import { Container } from './components/Container';
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';
 import { Notification } from './components/Notification';
-import { PickUpForm } from './components/PickUpForm';
-import { Modal } from './components/Modal';
+import { ScrollToTop } from './components/ScrollToTop/ScrollToTop';
 
-const App = () => {
+const App: React.FC = () => {
   return (
     <div className="page">
       <Container>
@@ -21,11 +20,8 @@ const App = () => {
         <Outlet />
       </div>
 
-      <Modal>
-        <PickUpForm />
-      </Modal>
-
       <Footer />
+      <ScrollToTop />
     </div>
   );
 };

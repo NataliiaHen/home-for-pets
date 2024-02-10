@@ -8,9 +8,18 @@ const getLinkClass = ({ isActive }: { isActive: boolean }) => classNames(
   { 'nav-list__item--is-active': isActive },
 );
 
-export const NavList: React.FC = memo(() => {
+type Props = {
+  location?: string;
+};
+
+export const NavList: React.FC<Props> = memo(({ location = 'header' }) => {
   return (
-    <div className="nav-list__items">
+    <div
+      className={classNames(
+        'nav-list__items',
+        `nav-list__items--${location}`,
+      )}
+    >
       <NavLink
         to="/"
         className={getLinkClass}

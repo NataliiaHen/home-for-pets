@@ -1,7 +1,6 @@
-// /* eslint-disable */
 import React, { memo } from 'react';
 import './AdoptionPage.scss';
-import AdoptForm from '../../components/AdoptForm/AdoptForm';
+import { AdoptForm } from '../../components/AdoptForm/AdoptForm';
 
 export const AdoptionPage: React.FC = memo(() => {
   return (

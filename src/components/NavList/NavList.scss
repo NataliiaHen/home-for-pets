@@ -3,22 +3,31 @@
 .nav-list {
   &__items {
     display: flex;
-    align-items: center;
+    
+    &--header {
+      align-items: center;
 
-    @include onLaptop {
-      gap: 40px;
+      @include onLaptop {
+        gap: 40px;
+      }
+    }
+
+    &--footer {
+      flex-direction: column;
+      gap: 8px;
     }
   }
 
   &__item {
     position: relative;
-    height: 100%;
     display: flex;
     align-items: center;
     text-align: center;
+    height: 100%;
+    @include hover(color, $blue-500);
 
     &--is-active {
-      color: #0A43B5;
+      color: $blue-700;
     }
   }
 }

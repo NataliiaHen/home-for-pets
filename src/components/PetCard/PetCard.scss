@@ -1,9 +1,9 @@
 @import "../../styles/style_utils";
 
 .pet-card {
-  grid-column: span 1;
   flex-basis: 288px;
   flex-grow: 1;
+  grid-column: span 1;
   box-shadow: none;
   background-color: #fff;
   border-radius: 5%;
@@ -13,7 +13,7 @@
 
   &__name {
     @extend %large-text;
-    margin-bottom: 12px;
+    margin-bottom: 0.75rem;
 
     @include onLaptop {
       margin-bottom: 1rem;
@@ -60,18 +60,18 @@
   }
 
   &__detail {
-    padding: 24px 16px;
+    padding: 1.5rem 1rem;
   }
 
   &__info-block {
-    margin-bottom: 24px;
+    margin-bottom: 1.5rem;
   }
 
   &__info {
+    @extend %small-text;
     display: flex;
     align-items: center;
     gap: 8px;
-    @extend %small-text;
 
     &-text {
       @extend %secondary-text;
@@ -91,8 +91,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 24px;
-    height: 24px;
+    @include square(24px);
   }
 
   &__buttons {

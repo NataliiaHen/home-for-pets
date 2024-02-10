@@ -3,11 +3,11 @@
 .footer {  
   &__content {
     @extend %secondary-text;
-    @include pageGrid;
+    @include page-grid;
     width: 100%;
     row-gap: 24px;
+    padding-block: 2rem;
     color: $primary-1300;
-    padding-block: 32px;
     border-bottom: 1px solid $primary-600;
   }
 
@@ -30,7 +30,7 @@
       justify-content: start;
     }
 
-    &-logo {
+    &--logo {
       grid-column: 1/-1;
 
       @include onLaptop {
@@ -38,7 +38,7 @@
       }
     }
     
-    &-nav {
+    &--nav {
       grid-column: 1/-1;
 
       @include onLaptop {
@@ -50,7 +50,7 @@
       }
     }
   
-    &-contacts {
+    &--contacts {
       grid-column: 1/-1;
 
       @include onLaptop {
@@ -61,9 +61,21 @@
         grid-column: 6/-1;
       }
     }
+
+    &--rights {
+      @extend %small-text;
+      display: flex;
+      justify-content: space-between;
+      padding-top: 1.5rem;
+      grid-column: 1/-1;
+
+      @include onLaptop {
+        border-top: 1px solid $primary-600;
+      }
+    }
         
     &:not(:last-child) {
-      padding-bottom: 24px;
+      padding-bottom: 1.5rem;
       border-bottom: 1px solid $primary-600;
 
       @include onLaptop {
@@ -83,11 +95,10 @@
     }
   }
 
-  &__contacts-list {
+  &__item-list {
     width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 16px;
 
     @include onTablet {
       width: 288px;
@@ -95,6 +106,22 @@
 
     @include onLaptop {
       width: 100%;
+    }
+
+    &--contacts {
+      gap: 16px;
+    }
+  }
+
+  &__contact-info {
+    @include onLaptop {
+      &:hover {
+        cursor: pointer;
+        
+        a {
+          color: $blue-500;
+        }
+      }
     }
   }
 
@@ -105,7 +132,15 @@
   &__contact-link {
     @extend %small-text;
     display: inline-block;
-    color: #7F7F7F;
+    color: $primary-900;
     padding-left: 0.5rem;
+  }
+
+  &__team-name {
+    color: $blue-700;
+  }
+
+  &__rights-text {
+    color: $primary-1000;
   }
 }

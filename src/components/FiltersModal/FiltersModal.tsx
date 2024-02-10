@@ -1,9 +1,12 @@
 import './FiltersModal.scss';
-import React, { memo, useEffect, useState } from 'react';
+import React, {
+  memo, useEffect, useRef, useState,
+} from 'react';
 import { CSSTransition } from 'react-transition-group';
 import { ReactSVG } from 'react-svg';
+import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
 import { Filters } from '../Filters/Filters';
-import { NavIcon } from '../NavIcon';
+import { IconBox } from '../IconBox';
 
 type Props = {
   closeMenu: () => void;
@@ -11,6 +14,7 @@ type Props = {
 
 export const FiltersModal: React.FC<Props> = memo(({ closeMenu }) => {
   const [showForm, setShowForm] = useState(false);
+  const filterModalRef = useRef<HTMLDivElement>(null);
 
   const handleModalClick = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>,
@@ -21,42 +25,54 @@ export const FiltersModal: React.FC<Props> = memo(({ closeMenu }) => {
   };
 
   useEffect(() => {
-    document.body.style.overflow = 'hidden';
     setShowForm(true);
+    const observerRefValue = filterModalRef.current;
 
-    return () => {
-      document.body.style.overflow = 'initial';
-    };
+    if (!observerRefValue) {
+      return undefined;
+    }
+
+    disableBodyScroll(observerRefValue);
+
+    return () => observerRefValue && enableBodyScroll(observerRefValue);
   }, []);
 
   return (
     <div
       className="filters-modal"
       onClick={handleModalClick}
+      ref={filterModalRef}
       aria-hidden
     >
       <CSSTransition
         in={showForm}
         timeout={300}
         classNames="modal-fade"
-        onExiting={closeMenu}
+        onExited={closeMenu}
         unmountOnExit
       >
         <div className="filters-modal__content">
           <div className="filters-modal__top">
-            <h3 className="filters-modal__title">Filters:</h3>
+            <h3 className="filters-modal__title">
+              Filters:
+            </h3>
 
-            <div className="filters-modal__icon-link filters-modal__icon-link--close">
-              <NavIcon>
+            <div
+              className="
+              filters-modal__icon-link"
+            >
+              <IconBox>
                 <ReactSVG
                   src="img/icon/close.svg"
                   onClick={() => setShowForm(false)}
                 />
-              </NavIcon>
+              </IconBox>
             </div>
           </div>
 
-          <Filters />
+          <Filters
+            closeMenu={closeMenu}
+          />
         </div>
       </CSSTransition>
 

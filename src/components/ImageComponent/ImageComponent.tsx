@@ -5,11 +5,15 @@ type Props = {
   altText: string,
 };
 
-export const ImageComponent: React.FC<Props> = ({ base64Image, altText }) => {
+export const ImageComponent: React.FC<Props> = ({
+  base64Image, altText, ...props
+}) => {
   return (
     <img
       src={`data:image/png;base64,${base64Image}`}
       alt={altText || 'Image'}
+      className="image-component"
+      {...props}
     />
   );
 };

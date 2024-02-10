@@ -1,8 +1,9 @@
 export type AnimalType = 'CAT' | 'DOG';
-export type GenderType = 'male' | 'female';
+export type GenderType = 'MALE' | 'FEMALE';
 export type AgeType = '0-1' | '1-2' | '2-5' | '5+';
 
 export interface Pet {
+  id: number,
   ownerName: string;
   ownerContactPhone: string;
   name: string;
@@ -13,7 +14,7 @@ export interface Pet {
   description: string;
   postImages: [
     {
-      data: string | null | File;
+      data: string;
     },
   ];
 }

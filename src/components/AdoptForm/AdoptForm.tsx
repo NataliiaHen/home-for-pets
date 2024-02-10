@@ -1,19 +1,31 @@
-/* eslint-disable */
 import './AdoptForm.scss';
-import React, { memo, useCallback, useContext, useState } from 'react';
+import React, {
+  Fragment, memo, useCallback, useState,
+} from 'react';
 import { useForm, Controller, SubmitHandler } from 'react-hook-form';
-import classNames from 'classnames';
 import { ReactSVG } from 'react-svg';
 import { PetFormData } from '../../types/PetForm';
-import { NotificationContext, NotificationStatus } from '../../storage/NotificationContext';
-import { ageOptions, ukraineRegionsOptions } from '../../types/SelectOptions';
+import {
+  ageOptions,
+  animalTypeOptions,
+  genderOptions,
+  ukraineRegionsOptions,
+} from '../../storage/options';
 import CustomSelect from '../Select/Select';
 import { ImageUpload } from '../ImageUpload/ImageUpload';
-import { addPet } from '../../api/pets';
 import { appendFormData } from '../../helpers/appendFormData';
+import { Loader } from '../Loader';
+import { NotificationStatus } from '../../types/Notification';
+import { useActions } from '../../app/hooks';
+import { useAddNewPetMutation } from '../../api/apiSlice';
+import { FormField } from '../FormField/FormField';
+import { FormPhoneField } from '../FormPhoneField/FormPhoneField';
 
-const AdoptForm: React.FC = memo(() => {
-  const { setNotification } = useContext(NotificationContext);
+export const AdoptForm: React.FC = memo(() => {
+  const { setNotification } = useActions();
+  const [isLoading, setIsLoading] = useState(false);
+  const [currentPhotoInput, setCurrentPhotoInput] = useState(0);
+  const [addPet] = useAddNewPetMutation();
 
   const {
     handleSubmit,
@@ -21,51 +33,70 @@ const AdoptForm: React.FC = memo(() => {
     register,
     reset,
     getValues,
-    formState: { errors, isSubmitSuccessful },
+    formState: {
+      errors, isSubmitSuccessful, isValid,
+    },
   } = useForm<PetFormData>({
     defaultValues: {
       post: {},
       images: [],
     },
+    mode: 'onBlur',
   });
 
-  const [currentPhotoInput, setCurrentPhotoInput] = useState<number>(0);
-  const description = getValues('post.description');
-  const images = getValues('images');
+  const descriptionValue = getValues('post.description');
+  const imagesValue = getValues('images');
 
   const onSubmit: SubmitHandler<PetFormData> = (data: PetFormData) => {
+    setIsLoading(true);
+
     const formData = appendFormData(data);
 
     addPet(formData)
+      .unwrap()
       .then(() => {
         setNotification({
           message: 'We contact with you soon',
           color: NotificationStatus.Success,
         });
 
-        reset();
-        setCurrentPhotoInput(0);
+        setTimeout(() => {
+          setCurrentPhotoInput(0);
+          reset();
+        }, 200);
+      })
+      .catch(() => {
+        setNotification({
+          message: 'Something went wrong! Try later',
+          color: NotificationStatus.Error,
+        });
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   };
 
   const handlePreviewChange = useCallback(() => {
-    const newInputIndex = images.findIndex((photo) => !photo);
+    const newInputIndex = imagesValue.findIndex((photo) => !photo);
 
-    setCurrentPhotoInput((cur) => {
-      let newIndex;
+    setCurrentPhotoInput((cur) => (newInputIndex >= 0
+      ? newInputIndex
+      : cur + 1));
+  }, [imagesValue]);
 
-      if (newInputIndex >= 0) {
-        newIndex = newInputIndex;
-      } else {
-        newIndex = cur + 1;
-      }
+  const handleImageChange = useCallback(
+    (file: File | null, field, index) => {
+      const updatedValues = [...field.value];
 
-      return newIndex;
-    });
-  }, [images]);
+      updatedValues[index] = file;
+      field.onChange(updatedValues);
+    }, [],
+  );
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="adopt-form">
+      {isLoading && <Loader />}
+
       <h2 className="adopt-form__title">Fill the information</h2>
 
       <section className="adopt-form__section">
@@ -73,59 +104,42 @@ const AdoptForm: React.FC = memo(() => {
 
         <div className="adopt-form__section-content">
           <div className="adopt-form__field adopt-form__field--half-block">
-            <label className="adopt-form__field-label" htmlFor="name">
-              Name
-            </label>
-
-            <input
-              {...register('post.ownerName', {
+            <FormField
+              label="Name"
+              type="text"
+              placeholder="Your name"
+              register={register('post.ownerName', {
                 required: 'Name is require field!',
                 minLength: {
                   value: 3,
                   message: 'Name must be at least 3 characters long',
                 },
               })}
-              className={classNames('adopt-form__input', {
-                'adopt-form__input--error': errors?.post?.ownerName,
-              })}
-              placeholder="Your name"
-              type="text"
-              id="name"
+              error={errors?.post?.ownerName}
             />
-
-            {errors?.post?.ownerName && (
-              <p className="adopt-form__error">
-                {errors.post.ownerName.message}
-              </p>
-            )}
           </div>
 
           <div className="adopt-form__field adopt-form__field--half-block">
-            <label className="adopt-form__field-label" htmlFor="phone">
-              Number
-            </label>
-
-            <div className="control">
-              <input
-                type="tel"
-                placeholder="Phone number"
-                {...register('post.ownerContactPhone', {
-                  required: 'Phone number is require field!',
-                  pattern: {
-                    value: /^(\+?38)?\s?0\d{9}$/,
-                    message: 'Invalid phone format',
-                  },
-                })}
-                className="adopt-form__input"
-                id="phone"
-              />
-            </div>
-
-            {errors?.post?.ownerContactPhone && (
-              <p className="adopt-form__error">
-                {errors.post.ownerContactPhone.message}
-              </p>
-            )}
+            <Controller
+              name="post.ownerContactPhone"
+              control={control}
+              rules={{
+                required: 'Phone number is require field!',
+                pattern: {
+                  value: /^\+380\d{9}$/,
+                  message: 'Please enter valid format +380 XX XXX XXXX',
+                },
+              }}
+              render={({ field }) => (
+                <FormPhoneField
+                  field={field}
+                  control={control}
+                  error={errors.post?.ownerContactPhone}
+                  placeholder="Phone number"
+                  label="Number"
+                />
+              )}
+            />
           </div>
         </div>
       </section>
@@ -135,37 +149,26 @@ const AdoptForm: React.FC = memo(() => {
 
         <div className="adopt-form__section-content">
           <div className="adopt-form__field">
-            <label
-              className="adopt-form__field-label"
-              htmlFor="pet-name"
-            >
-              Name
-            </label>
-            <div className="control">
-              <input
-                {...register('post.name', {
-                  required: 'Pet name is require field!',
-                  minLength: {
-                    value: 3,
-                    message: 'Name must be at least 3 characters long',
-                  },
-                })}
-                className={classNames('adopt-form__input', {
-                  'adopt-form__input--error': errors?.post?.name,
-                })}
-                placeholder="Your name"
-                type="text"
-                id="pet-name"
-              />
-
-              {errors?.post?.name && (
-                <p className="adopt-form__error">{errors.post.name.message}</p>
-              )}
-            </div>
+            <FormField
+              label="Name"
+              type="text"
+              placeholder="Pet name"
+              register={register('post.name', {
+                required: 'Pet name is require field!',
+                minLength: {
+                  value: 2,
+                  message: 'Name must be at least 2 characters long',
+                },
+              })}
+              error={errors?.post?.name}
+            />
           </div>
 
           <div className="adopt-form__field">
-            <label className="adopt-form__field-label">
+            <label
+              className="adopt-form__field-label"
+              htmlFor="animal type"
+            >
               <div className="adopt-form__icon-box">
                 <ReactSVG
                   src="img/icon/paw.svg"
@@ -174,42 +177,37 @@ const AdoptForm: React.FC = memo(() => {
               </div>
               Animal Type
             </label>
-            <div className="adopt-form__radio-group">
-              <div className="adopt-form__radio-button-box">
-                <input
-                  type="radio"
-                  id="cat"
-                  value="CAT"
-                  {...register('post.animalType', {
-                    required: 'Animal type is required',
-                  })}
-                  className="adopt-form__radio-button"
-                />
-                <label htmlFor="cat" className="adopt-form__radio-label">
-                  Cat
-                </label>
-              </div>
 
-              <div className="adopt-form__radio-button-box">
-                <input
-                  type="radio"
-                  id="dog"
-                  value="DOG"
-                  {...register('post.animalType', {
-                    required: 'Animal type is required',
-                  })}
-                  className="adopt-form__radio-button"
-                />
-
-                <label htmlFor="dog" className="adopt-form__radio-label">
-                  Dog
-                </label>
-              </div>
+            <div className="adopt-form__radio-group" id="animal type">
+              {animalTypeOptions.map((option) => {
+                return (
+                  <Fragment key={option.value}>
+                    <input
+                      type="radio"
+                      id={option.label}
+                      value={option.value}
+                      {...register('post.animalType', {
+                        required: 'Animal type is required',
+                      })}
+                      className="adopt-form__radio-button"
+                    />
+                    <label
+                      htmlFor={option.label}
+                      className="adopt-form__radio-label"
+                    >
+                      {option.label}
+                    </label>
+                  </Fragment>
+                );
+              })}
             </div>
           </div>
 
           <div className="adopt-form__field">
-            <label className="adopt-form__field-label">
+            <label
+              className="adopt-form__field-label"
+              htmlFor="gender"
+            >
               <div className="adopt-form__icon-box">
                 <ReactSVG
                   src="img/icon/gender.svg"
@@ -218,43 +216,33 @@ const AdoptForm: React.FC = memo(() => {
               </div>
               Gender
             </label>
-            <div className="adopt-form__radio-group">
-              <div className="adopt-form__radio-button-box">
-                <input
-                  type="radio"
-                  id="male"
-                  value="male"
-                  {...register('post.gender', {
-                    required: 'Pet gender is required',
-                  })}
-                  className="adopt-form__radio-button"
-                />
 
-                <label htmlFor="male" className="adopt-form__radio-label">
-                  Male
-                </label>
-              </div>
+            <div className="adopt-form__radio-group" id="gender">
+              {genderOptions.map((option) => (
+                <Fragment key={option.value}>
+                  <input
+                    type="radio"
+                    id={option.label}
+                    value={option.value}
+                    {...register('post.gender', {
+                      required: 'Animal gender is required',
+                    })}
+                    className="adopt-form__radio-button"
+                  />
 
-              <div className="adopt-form__radio-button-box">
-                <input
-                  type="radio"
-                  id="female"
-                  value="female"
-                  {...register('post.gender', {
-                    required: 'Pet gender is required',
-                  })}
-                  className="adopt-form__radio-button"
-                />
-
-                <label htmlFor="female" className="adopt-form__radio-label">
-                  Female
-                </label>
-              </div>
+                  <label
+                    htmlFor={option.label}
+                    className="adopt-form__radio-label"
+                  >
+                    {option.label}
+                  </label>
+                </Fragment>
+              ))}
             </div>
           </div>
 
           <div className="adopt-form__field adopt-form__field--half-block">
-            <label className="adopt-form__field-label">
+            <label className="adopt-form__field-label" htmlFor="Location">
               <div className="adopt-form__icon-box">
                 <ReactSVG
                   src="img/icon/location.svg"
@@ -264,25 +252,29 @@ const AdoptForm: React.FC = memo(() => {
               Location
             </label>
 
-            <Controller
-              name="post.location"
-              control={control}
-              render={({ field }) => (
-                <>
-                  <CustomSelect
-                    options={ukraineRegionsOptions}
-                    field={field}
-                    placeholder="All regions"
-                  />
-                  {errors?.post?.location && (
-                    <span className="adopt-form__error">
-                      {errors?.post?.location.message}
-                    </span>
-                  )}
-                </>
-              )}
-              rules={{ required: 'Location is required' }}
-            />
+            <div className="adopt-form__custom-select">
+              <Controller
+                name="post.location"
+                control={control}
+                render={({ field }) => (
+                  <>
+                    <CustomSelect
+                      options={ukraineRegionsOptions}
+                      field={field}
+                      placeholder="All regions"
+                      id="Location"
+                    />
+                    {errors?.post?.location && (
+                      <span className="adopt-form__error">
+                        {errors?.post?.location.message}
+                      </span>
+                    )}
+                  </>
+                )}
+                rules={{ required: 'Location is required' }}
+              />
+            </div>
+
           </div>
 
           <div className="adopt-form__field adopt-form__field--half-block">
@@ -296,63 +288,50 @@ const AdoptForm: React.FC = memo(() => {
               Age
             </label>
 
-            <Controller
-              name="post.age"
-              control={control}
-              render={({ field }) => (
-                <>
-                  <CustomSelect
-                    options={ageOptions}
-                    field={field}
-                    placeholder="All"
-                  />
-                  {errors?.post?.age && (
-                    <span className="adopt-form__error">
-                      {errors?.post?.age.message}
-                    </span>
-                  )}
-                </>
-              )}
-              rules={{ required: 'Age is required' }}
-            />
+            <div className="adopt-form__custom-select">
+              <Controller
+                name="post.age"
+                control={control}
+                render={({ field }) => (
+                  <>
+                    <CustomSelect
+                      options={ageOptions}
+                      field={field}
+                      placeholder="All"
+                      id="age"
+                    />
+                    {errors?.post?.age && (
+                      <span className="adopt-form__error">
+                        {errors?.post?.age.message}
+                      </span>
+                    )}
+                  </>
+                )}
+                rules={{ required: 'Age is required' }}
+              />
+            </div>
           </div>
 
           <div className="adopt-form__field">
-            <label className="adopt-form__field-label" htmlFor="description">
-              Description
-            </label>
-
-            <textarea
-              {...register('post.description', {
+            <FormField
+              label="Description"
+              type="textarea"
+              placeholder="Briefly describe the pet"
+              register={register('post.description', {
                 required: 'Please type at least 10 characters.',
                 minLength: {
                   value: 10,
                   message: 'Please type at least 10 characters.',
                 },
                 maxLength: {
-                  value: 250,
-                  message: 'Please type less than 250 characters.',
+                  value: 300,
+                  message: 'Please type less than 300 characters.',
                 },
               })}
-              className={classNames(
-                'adopt-form__input adopt-form__input--text',
-                { 'adopt-form__input--error': errors?.post?.description },
-              )}
-              placeholder="Briefly describe the pet"
-              id="question"
+              error={errors?.post?.description}
+              characterCount={descriptionValue?.length}
+              maxCharacters={300}
             />
-
-            {errors?.post?.description && (
-              <p className="adopt-form__error">
-                {errors?.post?.description.message}
-              </p>
-            )}
-
-            {!errors?.post?.description && description?.length > 250 && (
-              <p className="adopt-form__error adopt-form__error--right">
-                {`${description.length}/250`}
-              </p>
-            )}
           </div>
 
           <div className="adopt-form__field">
@@ -365,26 +344,17 @@ const AdoptForm: React.FC = memo(() => {
               control={control}
               render={({ field }) => (
                 <div className="adopt-form__photo-container">
-                  {[1, 2, 3, 4].map((num, index) => {
-                    const handleImageChange = useCallback(
-                      (file: File | null) => {
-                        const updatedValues = [...field.value];
-                        updatedValues[index] = file;
-                        field.onChange(updatedValues);
-                      },
-                      [field]
-                    );
-
-                    return (
-                      <ImageUpload
-                        key={num}
-                        onChange={handleImageChange}
-                        currentInput={currentPhotoInput === index}
-                        handlePreviewChange={handlePreviewChange}
-                        clearPreview={isSubmitSuccessful}
-                      />
-                    );
-                  })}
+                  {[1, 2, 3, 4].map((num, index) => (
+                    <ImageUpload
+                      key={num}
+                      onChange={(file: File | null) => handleImageChange(
+                        file, field, index,
+                      )}
+                      currentInput={currentPhotoInput === index}
+                      handlePreviewChange={handlePreviewChange}
+                      clearPreview={isSubmitSuccessful}
+                    />
+                  ))}
                   {errors.images && (
                     <span className="adopt-form__error">
                       {errors.images?.message}
@@ -398,11 +368,13 @@ const AdoptForm: React.FC = memo(() => {
         </div>
       </section>
 
-      <button type="submit" className="adopt-form__button">
+      <button
+        type="submit"
+        className="adopt-form__button"
+        disabled={!isValid}
+      >
         Send
       </button>
     </form>
   );
 });
-
-export default AdoptForm;

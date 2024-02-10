@@ -1,45 +1,65 @@
 import './PetCard.scss';
-import { Link, useLocation, useSearchParams } from 'react-router-dom';
-import React, { useContext, memo } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import React, { memo } from 'react';
 import { ReactSVG } from 'react-svg';
 import { ButtonHeart } from '../ButtonHeart';
 import { AdoptBtn } from '../AdoptBtn';
+import { Pet } from '../../types/Pet';
+import { convertToTitleCase } from '../../helpers/getTitileCase';
 
-// type Props = {
-//   pet?: Product;
-// };
+type Props = {
+  pet: Pet;
+};
 
-export const PetCard: React.FC = memo(() => {
-  const itemId = 1;
+export const PetCard: React.FC<Props> = memo(({ pet }) => {
+  const {
+    id, name, gender, age, postImages,
+  } = pet;
+  const state = useLocation();
+  const imageUrl = `data:image/png;base64,${postImages[0].data}`;
 
   return (
     <li className="pet-card">
       <div className="pet-card__img-container">
-        <Link to={`/${itemId}`} className="pet-card__link-img">
+        <Link
+          to={`/pets/${id}`}
+          state={{ search: state.search }}
+          className="pet-card__link-img"
+        >
           <img
-            src="img/pets/grinka/image-1.jpg"
-            alt="Grinka"
+            src={imageUrl}
+            alt={name}
             className="pet-card__img"
           />
         </Link>
 
         <div className="pet-card__fav-btn">
-          <ButtonHeart />
+          <ButtonHeart
+            key={pet.id}
+            pet={pet}
+          />
         </div>
       </div>
 
       <div className="pet-card__detail">
-        <Link to={`/${itemId}`}>
-          <p className="pet-card__name">Grinka</p>
+        <Link to={`/pets/${id}`}>
+          <p className="pet-card__name">
+            {name}
+          </p>
         </Link>
 
         <div className="pet-card__info-block">
           <div className="pet-card__info">
             <div className="pet-card__icon-box">
-              <ReactSVG src="img/icon/female.svg" className="pet-card__icon" />
+              <ReactSVG
+                src={`img/icon/${gender.toLowerCase()}.svg`}
+                className="pet-card__icon"
+              />
             </div>
 
-            <div className="pet-card__info-text">Female</div>
+            <div className="pet-card__info-text">
+              {convertToTitleCase(gender)}
+            </div>
           </div>
 
           <div className="pet-card__info">
@@ -50,12 +70,18 @@ export const PetCard: React.FC = memo(() => {
               />
             </div>
 
-            <div className="pet-card__info-text">1 year</div>
+            <div className="pet-card__info-text">
+              {age}
+            </div>
           </div>
         </div>
 
         <div className="pet-card__buttons">
-          <AdoptBtn>Adopt</AdoptBtn>
+          <AdoptBtn
+            id={pet.id}
+          >
+            Adopt
+          </AdoptBtn>
         </div>
       </div>
     </li>

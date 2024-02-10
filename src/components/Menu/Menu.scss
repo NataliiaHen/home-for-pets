@@ -1,22 +1,23 @@
 @import "../../styles/style_utils";
 
 .menu {
-  @include contentPaddingInline;
+  @include content-padding-inline;
   position: fixed;
   top: 0;
   left: 0;
   height: 100vh;
   width: 100vw;
-  background-color: white;
+  background-color: $page-bg;
   z-index: 1;
 
   &__top {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 48px;
-    padding-block: 16px;
-    margin-bottom: 40px;
+    box-sizing: content-box;
+    height: 44px;
+    padding-block: 1rem;
+    margin-bottom: 2.5rem;
     border-bottom: 1px solid $primary-600;
 
     @include onTablet {
@@ -45,8 +46,8 @@
   &__list {
     display: flex;
     flex-direction: column;
-    gap: 15px;
     padding: 0;
+    gap: 15px;
     list-style: none;
   }
 
@@ -56,11 +57,9 @@
 
   &__link {
     @extend %main-text;
-    color: $primary-1000;
     padding-bottom: 5px;
     border-bottom: 2px solid transparent;
-    line-height: 140%;
-    font-weight: 400;
+    color: $primary-1000;
 
     @include hover(color, $blue-400);
   }

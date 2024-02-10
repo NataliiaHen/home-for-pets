@@ -14,7 +14,7 @@ export const Services: React.FC = () => {
 
           <div className="services__links">
             <Link
-              to="/phones"
+              to="/pets?animalType=CAT"
               className="services__link"
             >
               <div
@@ -32,7 +32,7 @@ export const Services: React.FC = () => {
               </p>
             </Link>
             <Link
-              to="/phones"
+              to="/pets?animalType=DOG"
               className="services__link"
             >
               <div
@@ -49,8 +49,9 @@ export const Services: React.FC = () => {
                 Choose a dog
               </p>
             </Link>
+
             <Link
-              to="/phones"
+              to="/give-for-adoption"
               className="services__link"
             >
               <div

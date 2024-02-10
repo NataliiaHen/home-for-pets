@@ -5,7 +5,7 @@
     width: 100%;
 
     @include onLaptop {
-      @include pageGrid;
+      @include page-grid;
     }
   }
 
@@ -43,6 +43,15 @@
   }
 
   &__open-filters-btn {
-    @include primaryButton;
+    @include primary-button;
+  }
+
+  &__error-message {
+    text-align: center;
+  }
+
+  &__reset-filters {
+    @include primary-button;
+    width: 180px;
   }
 }

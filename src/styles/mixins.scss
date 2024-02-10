@@ -1,3 +1,9 @@
+@mixin media-query($breakpoint) {
+  @media (min-width: $breakpoint) {
+    @content;
+  }
+}
+
 @mixin onTablet {
   @media (min-width: 640px) {
     @content;
@@ -13,15 +19,14 @@
 @mixin onDesktop {
   @media (min-width: 1440px) {
     @content;
-  }
-}
+  }}
 
 @mixin square($size) {
   width: $size;
   height: $size;
 }
 
-@mixin madeIcon($size) {
+@mixin made-icon($size) {
   display: block;
   @include square($size);
 
@@ -29,21 +34,29 @@
   background-position: center;
 }
 
-@mixin circleButton($size) {
+@mixin style-svg-stroke($color) {
+  & svg {
+    path {
+      stroke: $color;
+    }
+  }
+}
+
+@mixin style-svg-button($color, $bg-color, $border-color) {
+  @include style-svg-stroke($color);
+  background-color: $bg-color;
+  border-color: $border-color;
+}
+
+@mixin circle-button($size) {
   @include square($size);
-  background-color: #fff;
-  border: 1px solid $primary-300;
+  background-color: white;
+  border: 2px solid $primary-500;
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
   transition: $transition;
-
-  & svg {
-    path {
-      stroke: $primary-1000;
-    }
-  }
 
   @include onLaptop {
     &:hover {
@@ -56,54 +69,54 @@
       }
     }
   }
+}
 
-  &:disabled {
-    border-color: $primary-400;
-    background-color: $primary-400;
-    pointer-events: none;
 
-    & svg {
-      path {
-        stroke: $primary-700;
-      }
-    }
+@mixin hover($property, $value, $transition: 0.3s) {
+  transition: $property $transition;
 
-    @include onLaptop {
-      &:hover {
-        border-color: $primary-400;
-        background-color: $primary-400;
-    
-        & svg {
-          path {
-            stroke: $primary-1000;
-          }
-        }
-      }
+  @include onLaptop {
+    &:hover {
+      #{$property}: $value;
     }
   }
 }
 
-@mixin primaryButton() {
-  @extend %large-text;
+@mixin scale {
+  transform: scale(1);
+
+  @include hover(transform, scale(1.1));
+}
+
+
+@mixin primary-button($transition: 0.3s) {
+  @extend %main-text;
   font-weight: 500;
   width: 100%;
   height: 42px;
   background-color: $blue-700;
   border-radius: 6px;
   color: $primary-50;
-  line-height: 21px;
-  box-shadow: none;
+  line-height: 42px;
+  display: inline-block;
+  text-align: center;
 
-  @include hover(box-shadow, 0 3px 13px 0 rgba(23, 32, 49, 0.26));
+  & a {
+    color: inherit;
+  }
 
-  // &--selected {
-  //   border: 1px solid $elements;
-  //   color: $green;
-  //   background-color: $white;
-  // }
+  @include hover(box-shadow, 0 3px 13px 0 rgba(23, 32, 49, 0.26), $transition);
+  @include hover(background-color, $blue-500, $transition);
+
+  &:disabled {
+    cursor: not-allowed;
+    @include hover(box-shadow, none, $transition);
+    color: $primary-600;
+    background-color: $primary-400;
+  }
 }
 
-@mixin contentPaddingInline {
+@mixin content-padding-inline {
   padding-inline: 16px;
 
   @include onTablet {
@@ -121,7 +134,7 @@
   }
 }
 
-@mixin pageGrid {
+@mixin page-grid {
   --columns: 2;
 
   display: grid;
@@ -145,7 +158,7 @@
   }
 }
 
-@mixin halfScreen {
+@mixin half-screen {
   @include onTablet {
     grid-column: span 2;
   }
@@ -159,16 +172,52 @@
   }
 }
 
-@mixin hover($property, $value, $transition: 0.3s) {
+@mixin section-gap {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+
+  @include onTablet {
+    gap: 80px;
+  }
+
   @include onLaptop {
-    &:hover {
-      #{$property}: $value;
-    }
+    gap: 100px;
+  }
+
+  @include onDesktop {
+    gap: 130px;
   }
 }
 
-@mixin scale {
-  transform: scale(1);
+@mixin form-input {
+  @extend %main-text;
+  width: 100%;
+  height: 42px;
+  padding: 0.5rem 1rem;
+  border: 1px solid $primary-300;
+  border-radius: 4px;
+  color: $primary-1000;
+  outline: none;
 
-  @include hover(transform, scale(1.2));
+  @include onLaptop {
+    height: 48px;
+  }
+
+  &:hover {
+    border-color: $blue-500;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: $blue-700;
+  }
+
+  &::placeholder {
+    color: $primary-400;
+  }
+
+  &--error {
+    border-color: $danger;
+  }
 }

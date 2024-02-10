@@ -4,8 +4,6 @@
   width: 100%;
 
   &__form {
-    @extend %main-text;
-
     @include onLaptop {
       font-size: 1.25rem;
     }
@@ -34,54 +32,7 @@
     }
   }
 
-  &__input {
-    width: 100%;
-    padding: 0.5rem 0.9rem;
-    line-height: 140%;
-    border: 1px solid $primary-300;
-    color: $primary-1000;
-    font-weight: 400;
-    outline: none;
-
-    &:focus {
-      outline: none;
-      border-color: $blue-500;
-    }
-
-    &::placeholder {
-      color: $primary-400;
-    }
-
-    &--text {
-      height: 200px;
-      padding: 0.9rem;
-      resize: none;
-    }
-
-    &--error {
-      border-color: $danger;
-    }
-  }
-
-  &__label {
-    padding-left: 16px;
-    margin-bottom: 5rem;
-    font-weight: 500;
-  }
-
-  &__error {
-    font-size: 0.77rem;
-    margin-top: 0.5rem;
-    color: $danger;
-
-    &--right {
-      text-align: right;
-    }
-  }
-
   &__button {
-    @include primaryButton;
-    // background-color: $primary-400;
-    // color: $primary-600;
+    @include primary-button;
   }
 }

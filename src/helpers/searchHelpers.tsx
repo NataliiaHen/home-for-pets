@@ -12,16 +12,18 @@ export function getSearchWith(
 
   Object.entries(paramsToUpdate)
     .forEach(([key, value]) => {
-      if (value === null) {
-        newParams.delete(key);
-      } else if (Array.isArray(value)) {
-        newParams.delete(key);
+      if (value) {
+        if (value === null) {
+          newParams.delete(key);
+        } else if (Array.isArray(value)) {
+          newParams.delete(key);
 
-        value.forEach(part => {
-          newParams.append(key, part);
-        });
-      } else {
-        newParams.set(key, value);
+          value.forEach(part => {
+            newParams.append(key, part);
+          });
+        } else {
+          newParams.set(key, value);
+        }
       }
     });
 

@@ -1,69 +1,86 @@
 import './Menu.scss';
-import React, { memo } from 'react';
+import React, { memo, useEffect, useRef } from 'react';
 import { ReactSVG } from 'react-svg';
 import { Link } from 'react-router-dom';
-import { NavIcon } from '../NavIcon';
+import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
 import { Logo } from '../Logo';
+import { IconBox } from '../IconBox';
 
 type Props = {
   closeMenu: () => void;
 };
 
-export const Menu: React.FC<Props> = memo(({ closeMenu }) => (
-  <aside className="menu">
-    <div className="menu__top">
-      <Logo />
+export const Menu: React.FC<Props> = memo(({ closeMenu }) => {
+  const menuRef = useRef<HTMLDivElement>(null);
 
-      <div className="menu__icon-link menu__icon-link--close">
-        <NavIcon>
-          <ReactSVG
-            src="img/icon/close.svg"
-            onClick={closeMenu}
-          />
-        </NavIcon>
+  useEffect(() => {
+    const observerRefValue = menuRef.current;
+
+    if (!observerRefValue) {
+      return undefined;
+    }
+
+    disableBodyScroll(observerRefValue);
+
+    return () => observerRefValue && enableBodyScroll(observerRefValue);
+  }, []);
+
+  return (
+    <aside className="menu" ref={menuRef}>
+      <div className="menu__top">
+        <Logo />
+
+        <div className="menu__icon-link menu__icon-link--close">
+          <IconBox>
+            <ReactSVG
+              src="img/icon/close.svg"
+              onClick={closeMenu}
+            />
+          </IconBox>
+        </div>
       </div>
-    </div>
 
-    <ul className="menu__list">
-      <li className="menu__item">
-        <Link
-          to="/"
-          className="menu__link"
-          onClick={closeMenu}
-        >
-          About us
-        </Link>
-      </li>
+      <ul className="menu__list">
+        <li className="menu__item">
+          <Link
+            to="/"
+            className="menu__link"
+            onClick={closeMenu}
+          >
+            About us
+          </Link>
+        </li>
 
-      <li className="menu__item">
-        <Link
-          to="/adoption"
-          className="menu__link"
-          onClick={closeMenu}
-        >
-          Give for Adoption
-        </Link>
-      </li>
+        <li className="menu__item">
+          <Link
+            to="/give-for-adoption"
+            className="menu__link"
+            onClick={closeMenu}
+          >
+            Give for Adoption
+          </Link>
+        </li>
 
-      <li className="menu__item">
-        <Link
-          to="/favorites"
-          className="menu__link"
-          onClick={closeMenu}
-        >
-          Favorited Pets
-        </Link>
-      </li>
+        <li className="menu__item">
+          <Link
+            to="/favorites"
+            className="menu__link"
+            onClick={closeMenu}
+          >
+            Favorited Pets
+          </Link>
+        </li>
 
-      <li className="menu__item">
-        <Link
-          to="/contacts"
-          className="menu__link"
-          onClick={closeMenu}
-        >
-          Contact us
-        </Link>
-      </li>
-    </ul>
-  </aside>
-));
+        <li className="menu__item">
+          <Link
+            to="/contacts"
+            className="menu__link"
+            onClick={closeMenu}
+          >
+            Contact us
+          </Link>
+        </li>
+      </ul>
+    </aside>
+  );
+});

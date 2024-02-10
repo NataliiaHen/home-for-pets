@@ -1,9 +1,7 @@
-/* eslint-disable */
 import React, { memo } from 'react';
 import './ContactUsPage.scss';
 import { Container } from '../../components/Container';
 import { QuestionForm } from '../../components/QuestionForm';
-import { PickUpForm } from '../../components/PickUpForm';
 
 export const ContactUsPage: React.FC = memo(() => {
   return (
@@ -18,11 +16,12 @@ export const ContactUsPage: React.FC = memo(() => {
               <a
                 href="https://maps.app.goo.gl/VhAycvH7Cek52o5a6"
                 target="_blank"
+                rel="noreferrer"
                 className="contact-us__link"
               >
                 Lviv city, Frankivsk district, Naukova Street 32,
                 <br />
-                Organization for homeless animals "Pets Home"
+                Organization for homeless animals &quot;Pets Home&quot;
               </a>
             </li>
 
@@ -42,8 +41,7 @@ export const ContactUsPage: React.FC = memo(() => {
           </ul>
         </Container>
 
-        {/* <QuestionForm key="contact-us-page" /> */}
-        <PickUpForm />
+        <QuestionForm key="contact-us-page" />
       </div>
     </div>
   );

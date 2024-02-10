@@ -1,0 +1,38 @@
+@import "../../styles/style_utils";
+
+.swiper-component {
+  position: relative;
+  padding-inline: 16px;
+  
+  @include onTablet {
+    padding-inline: 22px;
+  }
+  
+  @include onLaptop {
+    padding-inline: 30px;
+  }
+  
+  @include onDesktop {
+    padding-left: calc(((100% - 1440px) / 2) + 60px);
+    padding-right: 0;
+  }
+}
+
+.image-swiper {
+  &__buttons {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 32px;
+
+    @include onDesktop {
+      margin-top: 40px;
+    }
+  }
+}
+
+.swiper-slide {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
