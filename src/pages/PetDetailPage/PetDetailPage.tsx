@@ -4,12 +4,22 @@ import { useParams } from 'react-router-dom';
 import { Container } from '../../components/Container';
 import { PetDetails } from '../../components/PetDetails';
 import { PetsCarousel } from '../../components/PetsCarousel';
+import { Loader } from '../../components/Loader';
+import { useGetPetsQuery } from '../../api/apiSlice';
+import { Pet } from '../../types/Pet';
 
 export const PetDetailPage: React.FC = memo(() => {
   const { petId } = useParams();
+  const {
+    data: pets = [] as Pet[],
+    isLoading: petsLoading,
+  } = useGetPetsQuery();
 
   return (
     <div className="pet-page">
+      {petsLoading && (
+        <Loader />
+      )}
       <Container>
         <div className="pet-page__content">
           <h2 className="pet-page__title">Meet</h2>
@@ -23,7 +33,11 @@ export const PetDetailPage: React.FC = memo(() => {
         </div>
       </Container>
 
-      <PetsCarousel />
+      {pets.length > 0 && (
+        <PetsCarousel
+          pets={pets}
+        />
+      )}
     </div>
   );
 });

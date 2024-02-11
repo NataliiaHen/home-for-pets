@@ -217,6 +217,11 @@
     color: $primary-400;
   }
 
+  &--textarea {
+    height: 200px;
+    resize: none;
+  }
+
   &--error {
     border-color: $danger;
   }

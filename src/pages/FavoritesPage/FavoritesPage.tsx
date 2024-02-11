@@ -6,12 +6,23 @@ import { useAppSelector } from '../../app/hooks';
 import { PetsList } from '../../components/PetsList';
 import { PetsCarousel } from '../../components/PetsCarousel';
 import { NoResults } from '../../components/NoResults';
+import { useGetPetsQuery } from '../../api/apiSlice';
+import { Pet } from '../../types/Pet';
+import { Loader } from '../../components/Loader';
 
 export const Favourites: React.FC = memo(() => {
   const favorites = useAppSelector(state => state.favorites);
+  const {
+    data: pets = [] as Pet[],
+    isLoading: petsLoading,
+  } = useGetPetsQuery();
 
   return (
     <div className="favorites">
+      {petsLoading && (
+        <Loader />
+      )}
+
       <Container>
         <div className="favorites__content">
 
@@ -59,7 +70,11 @@ export const Favourites: React.FC = memo(() => {
         </div>
       </Container>
 
-      <PetsCarousel />
+      {pets.length && (
+        <PetsCarousel
+          pets={pets}
+        />
+      )}
     </div>
   );
 });

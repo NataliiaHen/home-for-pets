@@ -1,24 +1,18 @@
 import './PetsCarousel.scss';
 import React, { memo, useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
-import { useGetPetsQuery } from '../../api/apiSlice';
-import { getRandomArray } from '../../helpers/getRandomArray';
-import { Loader } from '../Loader';
 import { CardSwiper } from '../Swiper';
 import { Pet } from '../../types/Pet';
 import { Container } from '../Container';
+import { getRandomArray } from '../../helpers/getRandomArray';
 
-export const PetsCarousel: React.FC = memo(() => {
-  const {
-    data: pets = [] as Pet[],
-    isLoading: petsLoading,
-  } = useGetPetsQuery();
-  const randomPets = useMemo(() => pets && getRandomArray(pets, 20), [pets]);
+type Props = {
+  pets: Pet[];
+};
+
+export const PetsCarousel: React.FC<Props> = memo(({ pets }) => {
   const { pathname } = useLocation();
-
-  if (petsLoading) {
-    return <Loader />;
-  }
+  const randomPets = useMemo(() => pets && getRandomArray(pets, 20), [pets]);
 
   return (
     <div className="pets-carousel">
@@ -42,9 +36,11 @@ export const PetsCarousel: React.FC = memo(() => {
         </div>
       </Container>
 
-      <CardSwiper
-        pets={randomPets}
-      />
+      {pets.length > 0 && (
+        <CardSwiper
+          pets={randomPets}
+        />
+      )}
     </div>
   );
 });
