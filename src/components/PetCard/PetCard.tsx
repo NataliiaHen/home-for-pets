@@ -20,70 +20,71 @@ export const PetCard: React.FC<Props> = memo(({ pet }) => {
 
   return (
     <li className="pet-card">
-      <div className="pet-card__img-container">
-        <Link
-          to={`/pets/${id}`}
-          state={{ search: state.search }}
-          className="pet-card__link-img"
-        >
-          <img
-            src={imageUrl}
-            alt={name}
-            className="pet-card__img"
-          />
-        </Link>
+      <Link
+        to={`/pets/${id}`}
+        state={{ search: state.search }}
+      >
+        <div className="pet-card__img-container">
+          <div
+            className="pet-card__link-img"
+          >
+            <img
+              src={imageUrl}
+              alt={name}
+              className="pet-card__img"
+            />
+          </div>
 
-        <div className="pet-card__fav-btn">
-          <ButtonHeart
-            key={pet.id}
-            pet={pet}
-          />
+          <div className="pet-card__fav-btn">
+            <ButtonHeart
+              key={pet.id}
+              pet={pet}
+            />
+          </div>
         </div>
-      </div>
 
-      <div className="pet-card__detail">
-        <Link to={`/pets/${id}`}>
+        <div className="pet-card__detail">
           <p className="pet-card__name">
             {name}
           </p>
-        </Link>
 
-        <div className="pet-card__info-block">
-          <div className="pet-card__info">
-            <div className="pet-card__icon-box">
-              <ReactSVG
-                src={`img/icon/${gender.toLowerCase()}.svg`}
-                className="pet-card__icon"
-              />
+          <div className="pet-card__info-block">
+            <div className="pet-card__info">
+              <div className="pet-card__icon-box">
+                <ReactSVG
+                  src={`img/icon/${gender.toLowerCase()}.svg`}
+                  className="pet-card__icon"
+                />
+              </div>
+
+              <div className="pet-card__info-text">
+                {convertToTitleCase(gender)}
+              </div>
             </div>
 
-            <div className="pet-card__info-text">
-              {convertToTitleCase(gender)}
+            <div className="pet-card__info">
+              <div className="pet-card__icon-box">
+                <ReactSVG
+                  src="img/icon/calendar.svg"
+                  className="pet-card__icon"
+                />
+              </div>
+
+              <div className="pet-card__info-text">
+                {age}
+              </div>
             </div>
           </div>
 
-          <div className="pet-card__info">
-            <div className="pet-card__icon-box">
-              <ReactSVG
-                src="img/icon/calendar.svg"
-                className="pet-card__icon"
-              />
-            </div>
-
-            <div className="pet-card__info-text">
-              {age}
-            </div>
+          <div className="pet-card__buttons">
+            <AdoptBtn
+              id={pet.id}
+            >
+              Adopt
+            </AdoptBtn>
           </div>
         </div>
-
-        <div className="pet-card__buttons">
-          <AdoptBtn
-            id={pet.id}
-          >
-            Adopt
-          </AdoptBtn>
-        </div>
-      </div>
+      </Link>
     </li>
   );
 });

@@ -12,6 +12,7 @@ const favoritesSlice = createSlice({
     removeFav: (state, action: PayloadAction<Pet>) => {
       return state.filter((pet) => pet.id !== action.payload.id);
     },
+    clearFav: () => [],
   },
 });
 
