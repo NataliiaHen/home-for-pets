@@ -60,6 +60,7 @@ export const ModalAdoptForm: React.FC = memo(() => {
     return () => {
       handleClose();
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

@@ -277,7 +277,7 @@ export const AdoptForm: React.FC = memo(() => {
                     <CustomSelect
                       options={ukraineRegionsOptions}
                       field={field}
-                      placeholder="All regions"
+                      placeholder="Choose region"
                       id="Location"
                     />
                     {errors?.post?.location && (
@@ -313,7 +313,7 @@ export const AdoptForm: React.FC = memo(() => {
                     <CustomSelect
                       options={ageOptions}
                       field={field}
-                      placeholder="All"
+                      placeholder="Choose age"
                       id="age"
                     />
                     {errors?.post?.age && (
