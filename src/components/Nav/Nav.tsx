@@ -65,7 +65,7 @@ export const Nav: React.FC = memo(() => {
 
       <CSSTransition
         in={isMenuOpen}
-        timeout={1000}
+        timeout={300}
         classNames="menu"
         mountOnEnter
         unmountOnExit

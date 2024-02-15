@@ -18,7 +18,7 @@ export const QuestionForm: React.FC = memo(() => {
     handleSubmit,
     watch,
     reset,
-    formState: { errors, isValid },
+    formState: { errors },
   } = useForm<ContactForm>({
     mode: 'onChange',
   });
@@ -136,7 +136,6 @@ export const QuestionForm: React.FC = memo(() => {
                 <button
                   type="submit"
                   className="question__button"
-                  disabled={!isValid}
                 >
                   Send message
                 </button>

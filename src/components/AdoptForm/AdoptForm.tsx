@@ -35,7 +35,7 @@ export const AdoptForm: React.FC = memo(() => {
     reset,
     getValues,
     formState: {
-      errors, isSubmitSuccessful, isValid,
+      errors, isSubmitSuccessful,
     },
   } = useForm<PetFormData>({
     defaultValues: {
@@ -387,7 +387,6 @@ export const AdoptForm: React.FC = memo(() => {
       <button
         type="submit"
         className="adopt-form__button"
-        disabled={!isValid}
       >
         Send
       </button>

@@ -111,12 +111,12 @@
   @include hover(box-shadow, 0 3px 13px 0 rgba(23, 32, 49, 0.26), $transition);
   @include hover(background-color, $blue-500, $transition);
 
-  &:disabled {
-    cursor: not-allowed;
-    @include hover(box-shadow, none, $transition);
-    color: $primary-600;
-    background-color: $primary-400;
-  }
+  // &:disabled {
+  //   cursor: not-allowed;
+  //   @include hover(box-shadow, none, $transition);
+  //   color: $primary-600;
+  //   background-color: $primary-400;
+  // }
 }
 
 @mixin content-padding-inline {

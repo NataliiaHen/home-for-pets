@@ -23,7 +23,7 @@ export const PickUpForm: React.FC<Props> = memo(({ id, handleFormClose }) => {
     handleSubmit,
     watch,
     control,
-    formState: { errors, isValid },
+    formState: { errors },
     reset,
   } = useForm<PickUpFormFields>({
     defaultValues: {
@@ -134,7 +134,6 @@ export const PickUpForm: React.FC<Props> = memo(({ id, handleFormClose }) => {
         <button
           type="submit"
           className="pick-up__button"
-          disabled={!isValid}
         >
           Send
         </button>
