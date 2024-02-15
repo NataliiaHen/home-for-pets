@@ -178,14 +178,14 @@
 @mixin section-gap {
   display: flex;
   flex-direction: column;
-  gap: 40px;
+  gap: 80px;
 
   @include onTablet {
-    gap: 80px;
+    gap: 100px;
   }
 
   @include onLaptop {
-    gap: 100px;
+    gap: 120px;
   }
 
   @include onDesktop {

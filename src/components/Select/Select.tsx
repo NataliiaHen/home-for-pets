@@ -121,7 +121,7 @@ const CustomSelect: React.FC<Props> = memo(({
     }),
     placeholder: (provided) => ({
       ...provided,
-      color: '#ebebec;',
+      color: '#7F7F7F;',
     }),
   };
 
