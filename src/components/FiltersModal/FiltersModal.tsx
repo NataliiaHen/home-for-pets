@@ -33,15 +33,44 @@ export const FiltersModal: React.FC<Props> = memo(({ closeMenu }) => {
     }
 
     disableBodyScroll(observerRefValue, {
-      allowTouchMove: el => el.className === 'filters-modal__content',
+      allowTouchMove: el => {
+        let targetElement = el;
+
+        while (targetElement && targetElement !== document.body) {
+          if (
+            targetElement.classList.contains('allow-scroll')
+          ) {
+            return true;
+          }
+
+          targetElement = targetElement.parentElement || el;
+        }
+
+        return false;
+      },
     });
 
     return () => observerRefValue && enableBodyScroll(observerRefValue);
   }, []);
 
+  // useEffect(() => {
+  //   setShowForm(true);
+  //   const observerRefValue = filterModalRef.current;
+
+  //   if (!observerRefValue) {
+  //     return undefined;
+  //   }
+
+  //   disableBodyScroll(observerRefValue, {
+  //     allowTouchMove: el => el.className === 'filters-modal__content',
+  //   });
+
+  //   return () => observerRefValue && enableBodyScroll(observerRefValue);
+  // }, []);
+
   return (
     <div
-      className="filters-modal"
+      className="filters-modal allow-scroll"
       onClick={handleModalClick}
       ref={filterModalRef}
       aria-hidden
@@ -53,7 +82,7 @@ export const FiltersModal: React.FC<Props> = memo(({ closeMenu }) => {
         onExited={closeMenu}
         unmountOnExit
       >
-        <div className="filters-modal__content">
+        <div className="filters-modal__content allow-scroll">
           <div className="filters-modal__top">
             <h3 className="filters-modal__title">
               Filters:
