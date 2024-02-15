@@ -110,7 +110,7 @@ export const AdoptForm: React.FC = memo(() => {
               type="text"
               placeholder="Your name"
               register={register('post.ownerName', {
-                required: 'Name is required field!!',
+                required: 'Name is required field!',
                 minLength: {
                   value: 3,
                   message: 'Name must be at least 3 characters long',
@@ -163,7 +163,7 @@ export const AdoptForm: React.FC = memo(() => {
               type="text"
               placeholder="Pet name"
               register={register('post.name', {
-                required: 'Pet name is required field!!',
+                required: 'Pet name is required field!',
                 pattern: {
                   value: nameRegEx,
                   message: 'Invalid characters',
@@ -217,6 +217,12 @@ export const AdoptForm: React.FC = memo(() => {
                   </Fragment>
                 );
               })}
+
+              {errors?.post?.animalType && (
+                <span className="adopt-form__error">
+                  {errors?.post?.animalType.message}
+                </span>
+              )}
             </div>
           </div>
 
@@ -255,6 +261,12 @@ export const AdoptForm: React.FC = memo(() => {
                   </label>
                 </Fragment>
               ))}
+
+              {errors?.post?.gender && (
+                <span className="adopt-form__error">
+                  {errors?.post?.gender.message}
+                </span>
+              )}
             </div>
           </div>
 
