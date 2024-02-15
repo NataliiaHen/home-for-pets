@@ -11,6 +11,7 @@ export const Notification: React.FC = memo(() => {
   const [show, setShow] = useState(false);
   const firstRenderRef = useRef(true);
   const { removeNotification } = useActions();
+  const nodeRef = useRef(null);
 
   useEffect(() => {
     if (firstRenderRef.current) {
@@ -40,6 +41,8 @@ export const Notification: React.FC = memo(() => {
     <CSSTransition
       in={show}
       timeout={1000}
+      appear
+      nodeRef={nodeRef}
       classNames="notification"
       unmountOnExit
     >

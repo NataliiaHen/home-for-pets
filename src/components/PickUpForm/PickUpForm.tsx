@@ -8,6 +8,8 @@ import { usePickUpRequestMutation } from '../../api/apiSlice';
 import { FormField } from '../FormField';
 import { FormPhoneField } from '../FormPhoneField/FormPhoneField';
 
+const nameRegEx = /^[^%$#@!&*()№;:'^[\]{}\\|/+=?]*$/;
+
 type Props = {
   id: string,
   handleFormClose: () => void;
@@ -39,7 +41,7 @@ export const PickUpForm: React.FC<Props> = memo(({ id, handleFormClose }) => {
       .unwrap()
       .then(() => {
         setNotification({
-          message: 'We contact with you soon',
+          message: 'We contact you soon',
           color: NotificationStatus.Success,
         });
 
@@ -67,7 +69,7 @@ export const PickUpForm: React.FC<Props> = memo(({ id, handleFormClose }) => {
               placeholder="Your name"
               error={errors?.name}
               register={register('name', {
-                required: 'Name is required!',
+                required: 'Name is required field!',
                 minLength: {
                   value: 3,
                   message: 'Name must be at least 3 characters long',
@@ -77,7 +79,7 @@ export const PickUpForm: React.FC<Props> = memo(({ id, handleFormClose }) => {
                   message: 'Name must be less then 15 characters long',
                 },
                 pattern: {
-                  value: /^[a-zA-Z ']+$/,
+                  value: nameRegEx,
                   message: 'Invalid characters',
                 },
               })}
@@ -89,7 +91,7 @@ export const PickUpForm: React.FC<Props> = memo(({ id, handleFormClose }) => {
               name="contactPhone"
               control={control}
               rules={{
-                required: 'Phone number is require field!',
+                required: 'Phone number is required field!',
                 pattern: {
                   value: /^\+380\d{9}$/,
                   message: 'Please enter valid format +380 XX XXX XXXX',

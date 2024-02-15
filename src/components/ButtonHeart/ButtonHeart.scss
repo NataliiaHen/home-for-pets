@@ -1,6 +1,7 @@
 @import "../../styles/style_utils";
 
 .button-fav {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -9,6 +10,7 @@
   background-color: $white;
   border-radius: 10%;
   transition: $transition;
+  z-index: 5;
 
   & svg {
     height: 32px;

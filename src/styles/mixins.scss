@@ -229,3 +229,13 @@
     border-color: $danger;
   }
 }
+
+@mixin error-message {
+  margin-top: 8px;
+  font-size: 0.77rem;
+  color: $danger;
+
+  &--right {
+    text-align: right;
+  }
+}

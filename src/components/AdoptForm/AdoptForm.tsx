@@ -21,6 +21,8 @@ import { useAddNewPetMutation } from '../../api/apiSlice';
 import { FormField } from '../FormField/FormField';
 import { FormPhoneField } from '../FormPhoneField/FormPhoneField';
 
+const nameRegEx = /^[^%$#@!&*()№;:'^[\]{}\\|/+=?]*$/;
+
 export const AdoptForm: React.FC = memo(() => {
   const { setNotification } = useActions();
   const [isLoading, setIsLoading] = useState(false);
@@ -41,11 +43,10 @@ export const AdoptForm: React.FC = memo(() => {
       post: {},
       images: [],
     },
-    mode: 'onBlur',
+    mode: 'onChange',
   });
 
   const descriptionValue = getValues('post.description');
-  const imagesValue = getValues('images');
 
   const onSubmit: SubmitHandler<PetFormData> = (data: PetFormData) => {
     setIsLoading(true);
@@ -56,7 +57,7 @@ export const AdoptForm: React.FC = memo(() => {
       .unwrap()
       .then(() => {
         setNotification({
-          message: 'We contact with you soon',
+          message: 'We contact you soon',
           color: NotificationStatus.Success,
         });
 
@@ -76,13 +77,13 @@ export const AdoptForm: React.FC = memo(() => {
       });
   };
 
-  const handlePreviewChange = useCallback(() => {
-    const newInputIndex = imagesValue.findIndex((photo) => !photo);
+  const handlePreviewChange = (values: (File | null)[]) => {
+    const newInputIndex = values.findIndex((photo) => !photo);
 
     setCurrentPhotoInput((cur) => (newInputIndex >= 0
       ? newInputIndex
       : cur + 1));
-  }, [imagesValue]);
+  };
 
   const handleImageChange = useCallback(
     (file: File | null, field, index) => {
@@ -90,6 +91,7 @@ export const AdoptForm: React.FC = memo(() => {
 
       updatedValues[index] = file;
       field.onChange(updatedValues);
+      handlePreviewChange(updatedValues);
     }, [],
   );
 
@@ -109,7 +111,7 @@ export const AdoptForm: React.FC = memo(() => {
               type="text"
               placeholder="Your name"
               register={register('post.ownerName', {
-                required: 'Name is require field!',
+                required: 'Name is required field!!',
                 minLength: {
                   value: 3,
                   message: 'Name must be at least 3 characters long',
@@ -119,7 +121,7 @@ export const AdoptForm: React.FC = memo(() => {
                   message: 'Name must be less then 15 characters long',
                 },
                 pattern: {
-                  value: /^[a-zA-Z ']+$/,
+                  value: nameRegEx,
                   message: 'Invalid characters',
                 },
               })}
@@ -132,7 +134,7 @@ export const AdoptForm: React.FC = memo(() => {
               name="post.ownerContactPhone"
               control={control}
               rules={{
-                required: 'Phone number is require field!',
+                required: 'Phone number is required field!',
                 pattern: {
                   value: /^\+380\d{9}$/,
                   message: 'Please enter valid format +380 XX XXX XXXX',
@@ -162,9 +164,9 @@ export const AdoptForm: React.FC = memo(() => {
               type="text"
               placeholder="Pet name"
               register={register('post.name', {
-                required: 'Pet name is require field!',
+                required: 'Pet name is required field!!',
                 pattern: {
-                  value: /^[a-zA-Z ']+$/,
+                  value: nameRegEx,
                   message: 'Invalid characters',
                 },
                 minLength: {
@@ -367,7 +369,6 @@ export const AdoptForm: React.FC = memo(() => {
                         file, field, index,
                       )}
                       currentInput={currentPhotoInput === index}
-                      handlePreviewChange={handlePreviewChange}
                       clearPreview={isSubmitSuccessful}
                     />
                   ))}

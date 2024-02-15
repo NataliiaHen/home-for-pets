@@ -79,7 +79,7 @@ export const ModalAdoptForm: React.FC = memo(() => {
         onExited={() => handleClose()}
 
       >
-        <div className="modal__content" ref={nodeRef}>
+        <div className="modal__content">
           <div className="modal__top">
             <h3 className="modal__title">Pick up your animal</h3>
             <div className="modal__cross">

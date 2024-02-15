@@ -120,7 +120,7 @@
   }
   
   &__error {
-    @extend %error-form-message;
+    @include error-message;
   }
   
   &__radio-group {

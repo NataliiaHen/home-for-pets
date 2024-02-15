@@ -45,9 +45,8 @@
   }
 
   &__small-photos {
-    display: flex;
-    justify-content: center;
-    align-content: center;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
     gap: 8px;
 
     @include onLaptop {
@@ -96,6 +95,7 @@
   }
 
   &__small-photo-container {
+    grid-column: span 1;
     border-radius: 8px;
     overflow: hidden;
 

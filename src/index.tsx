@@ -5,6 +5,7 @@ import { HashRouter as Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { Root } from './Root';
 import { PageSizeProvider } from './storage/PageSizeContext';
+import { FavProvider } from './storage/FavContext';
 import { store } from './app/store';
 
 ReactDOM.render(
@@ -12,7 +13,9 @@ ReactDOM.render(
     <Provider store={store}>
       <Router>
         <PageSizeProvider>
-          <Root />
+          <FavProvider>
+            <Root />
+          </FavProvider>
         </PageSizeProvider>
       </Router>
     </Provider>

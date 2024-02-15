@@ -9,6 +9,8 @@ import { useActions } from '../../app/hooks';
 import { useContactUsRequestMutation } from '../../api/apiSlice';
 import { FormField } from '../FormField/FormField';
 
+const nameRegEx = /^[^%$#@!&*()№;:'^[\]{}\\|/+=?]*$/;
+
 export const QuestionForm: React.FC = memo(() => {
   const { setNotification } = useActions();
   const [contactUsRequest] = useContactUsRequestMutation();
@@ -19,7 +21,7 @@ export const QuestionForm: React.FC = memo(() => {
     reset,
     formState: { errors, isValid },
   } = useForm<ContactForm>({
-    mode: 'onBlur',
+    mode: 'onChange',
   });
   const [isLoading, setIsloading] = useState(false);
   const questionRef = useRef(null);
@@ -32,7 +34,7 @@ export const QuestionForm: React.FC = memo(() => {
       .unwrap()
       .then(() => {
         setNotification({
-          message: 'We contact with you soon',
+          message: 'We contact you soon',
           color: NotificationStatus.Success,
         });
 
@@ -76,9 +78,9 @@ export const QuestionForm: React.FC = memo(() => {
                       placeholder="Your name"
                       error={errors?.name}
                       register={register('name', {
-                        required: 'Name is required!',
+                        required: 'Name is required field!',
                         pattern: {
-                          value: /^[a-zA-Z ']+$/,
+                          value: nameRegEx,
                           message: 'Invalid characters',
                         },
                         minLength: {
@@ -100,7 +102,7 @@ export const QuestionForm: React.FC = memo(() => {
                       placeholder="Igor_Yakiv@gmail.com"
                       error={errors?.email}
                       register={register('email', {
-                        required: 'Email is required!',
+                        required: 'Email is required field!',
                         pattern: {
                           value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
                           message: 'Please enter a valid email',

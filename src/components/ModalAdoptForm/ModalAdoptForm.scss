@@ -4,25 +4,35 @@
   position: fixed;
   left: 0;
   top: 0;
-  z-index: 999;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  width: 100vw;
+  z-index: 90;
+  min-width: 100vw;
+  min-height: 760px;
+  width: 100%;
+  height: 100%;
   background-color: rgba(41, 41, 41, 0.8);
+  overflow-y: scroll;
+  
+  @include onTablet {
+    min-height: 100vh;
+  }
 
   &__content {
     padding: 40px 16px;
-    position: relative;
+    position: fixed;
+    top: 0;
     width: 100%;
+    min-height: 100%;
     height: 100%;
     background-color: $page-bg;
     border: 1px solid $primary-400;
-    border-radius: 16px;
-  
+    overflow-y: scroll;
+    
     @include onTablet {
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
       padding: 2rem 4rem;
+      border-radius: 16px;
       width: 496px;
       height: auto;
     }

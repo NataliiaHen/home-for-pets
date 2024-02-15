@@ -1,25 +1,26 @@
-import React, { memo } from 'react';
+import React, { memo, useContext } from 'react';
 import classNames from 'classnames';
 import './ButtonHeart.scss';
 import { ReactSVG } from 'react-svg';
 import { Pet } from '../../types/Pet';
 import { checkFav } from './utils';
-import { useAppSelector, useActions } from '../../app/hooks';
+import { FavContext } from '../../storage/FavContext';
 
 type Props = {
   pet: Pet;
 };
 
 export const ButtonHeart: React.FC<Props> = memo(({ pet }) => {
-  const favorites = useAppSelector(state => state.favorites);
-  const { addFav, removeFav } = useActions();
-  const isFav = checkFav(favorites, pet.id);
+  const { favoritePets, addFav, removeFav } = useContext(FavContext);
+  const isFav = checkFav(favoritePets, pet.id);
 
-  const toggleFav = () => {
+  const toggleFav = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.preventDefault();
+
     if (!isFav) {
       addFav(pet);
     } else {
-      removeFav(pet);
+      removeFav(pet.id);
     }
   };
 
@@ -29,7 +30,7 @@ export const ButtonHeart: React.FC<Props> = memo(({ pet }) => {
         'button-fav',
         { 'button-fav--selected': isFav },
       )}
-      onClick={toggleFav}
+      onClick={(e) => toggleFav(e)}
       data-cy="addToFavorite"
       aria-label="toggle favorite"
       type="button"

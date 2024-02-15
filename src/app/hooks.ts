@@ -4,11 +4,9 @@ import { bindActionCreators } from 'redux';
 import { ThunkDispatch } from '@reduxjs/toolkit';
 import type { TypeRootState, AppDispatch } from './store';
 import { notificationActions } from '../storage/notification';
-import { favoritesActions } from '../storage/favorites';
 
 const allActions = {
   ...notificationActions,
-  ...favoritesActions,
 };
 
 export const useAppDispatch: () => AppDispatch = useDispatch;

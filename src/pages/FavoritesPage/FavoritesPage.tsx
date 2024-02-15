@@ -1,17 +1,17 @@
 import './FavoritesPage.scss';
-import React, { memo } from 'react';
+import React, { memo, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { Container } from '../../components/Container';
-import { useAppSelector } from '../../app/hooks';
 import { PetsList } from '../../components/PetsList';
 import { PetsCarousel } from '../../components/PetsCarousel';
 import { NoResults } from '../../components/NoResults';
 import { useGetPetsQuery } from '../../api/apiSlice';
 import { Pet } from '../../types/Pet';
 import { Loader } from '../../components/Loader';
+import { FavContext } from '../../storage/FavContext';
 
 export const Favourites: React.FC = memo(() => {
-  const favorites = useAppSelector(state => state.favorites);
+  const { favoritePets } = useContext(FavContext);
   const {
     data: pets = [] as Pet[],
     isLoading: petsLoading,
@@ -26,7 +26,7 @@ export const Favourites: React.FC = memo(() => {
       <Container>
         <div className="favorites__content">
 
-          {favorites.length > 0 ? (
+          {favoritePets.length > 0 ? (
             <>
               <div className="favorites__top">
                 <h1 className="favorites__title">
@@ -34,12 +34,12 @@ export const Favourites: React.FC = memo(() => {
                 </h1>
 
                 <p className="favorites__text">
-                  {`${favorites.length} items`}
+                  {`${favoritePets.length} items`}
                 </p>
               </div>
 
               <PetsList
-                pets={favorites}
+                pets={favoritePets}
               />
             </>
           ) : (
