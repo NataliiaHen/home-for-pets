@@ -32,7 +32,9 @@ export const FiltersModal: React.FC<Props> = memo(({ closeMenu }) => {
       return undefined;
     }
 
-    disableBodyScroll(observerRefValue);
+    disableBodyScroll(observerRefValue, {
+      allowTouchMove: el => el.className === 'filters-modal__content',
+    });
 
     return () => observerRefValue && enableBodyScroll(observerRefValue);
   }, []);

@@ -8,8 +8,7 @@ import { Loader } from '../Loader';
 import { useActions } from '../../app/hooks';
 import { useContactUsRequestMutation } from '../../api/apiSlice';
 import { FormField } from '../FormField/FormField';
-
-const nameRegEx = /^[^%$#@!&*()№;:'^[\]{}\\|/+=?]*$/;
+import { emailRegEx, nameRegEx } from '../../storage/patterns';
 
 export const QuestionForm: React.FC = memo(() => {
   const { setNotification } = useActions();
@@ -104,7 +103,7 @@ export const QuestionForm: React.FC = memo(() => {
                       register={register('email', {
                         required: 'Email is required field!',
                         pattern: {
-                          value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                          value: emailRegEx,
                           message: 'Please enter a valid email',
                         },
                       })}

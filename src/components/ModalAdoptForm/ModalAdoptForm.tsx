@@ -47,7 +47,9 @@ export const ModalAdoptForm: React.FC = memo(() => {
     }
 
     setShowForm(true);
-    disableBodyScroll(observerRefValue);
+    disableBodyScroll(observerRefValue, {
+      allowTouchMove: el => el.className === 'modal__content',
+    });
 
     const handleModalOpen = () => {
       sessionStorage.setItem('isModalOpen', 'true');

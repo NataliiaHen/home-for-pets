@@ -20,8 +20,7 @@ import { useActions } from '../../app/hooks';
 import { useAddNewPetMutation } from '../../api/apiSlice';
 import { FormField } from '../FormField/FormField';
 import { FormPhoneField } from '../FormPhoneField/FormPhoneField';
-
-const nameRegEx = /^[^%$#@!&*()№;:'^[\]{}\\|/+=?]*$/;
+import { nameRegEx, phoneRegEx } from '../../storage/patterns';
 
 export const AdoptForm: React.FC = memo(() => {
   const { setNotification } = useActions();
@@ -136,7 +135,7 @@ export const AdoptForm: React.FC = memo(() => {
               rules={{
                 required: 'Phone number is required field!',
                 pattern: {
-                  value: /^\+380\d{9}$/,
+                  value: phoneRegEx,
                   message: 'Please enter valid format +380 XX XXX XXXX',
                 },
               }}

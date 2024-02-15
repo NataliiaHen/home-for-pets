@@ -17,7 +17,7 @@ export const ukraineRegions = [
   'Vinnytska Oblast',
   'Ternopilska Oblast',
   'Cherkaska Oblast',
-  'Sumy Oblast',
+  'Sumska Oblast',
   'Rivnenska Oblast',
   'Chernihivska Oblast',
   'Zakarpatska Oblast',

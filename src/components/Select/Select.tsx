@@ -49,6 +49,20 @@ const CustomSelect: React.FC<Props> = memo(({
     );
   };
 
+  // const CustomDropdownIndicator = (
+  //   props: DropdownIndicatorProps<SelectOption, true> & { menuIsOpen: boolean },
+  // ) => {
+  //   return (
+  //     <components.DropdownIndicator {...props}>
+  //       <ReactSVG
+  //         src={props.menuIsOpen
+  //           ? 'img/icon/arrow-up.svg'
+  //           : 'img/icon/arrow-down.svg'}
+  //       />
+  //     </components.DropdownIndicator>
+  //   );
+  // };
+
   const CustomDropdownIndicator = (
     props: DropdownIndicatorProps<SelectOption, true>,
   ) => {
@@ -100,6 +114,10 @@ const CustomSelect: React.FC<Props> = memo(({
         backgroundColor: '#f1f1f1',
         color: '#3E7FFF',
       },
+    }),
+    indicatorsContainer: (provided) => ({
+      ...provided,
+      pointerEvents: 'none',
     }),
     placeholder: (provided) => ({
       ...provided,

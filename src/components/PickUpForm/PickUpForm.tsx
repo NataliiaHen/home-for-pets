@@ -7,8 +7,7 @@ import { NotificationStatus } from '../../types/Notification';
 import { usePickUpRequestMutation } from '../../api/apiSlice';
 import { FormField } from '../FormField';
 import { FormPhoneField } from '../FormPhoneField/FormPhoneField';
-
-const nameRegEx = /^[^%$#@!&*()№;:'^[\]{}\\|/+=?]*$/;
+import { nameRegEx, phoneRegEx } from '../../storage/patterns';
 
 type Props = {
   id: string,
@@ -93,7 +92,7 @@ export const PickUpForm: React.FC<Props> = memo(({ id, handleFormClose }) => {
               rules={{
                 required: 'Phone number is required field!',
                 pattern: {
-                  value: /^\+380\d{9}$/,
+                  value: phoneRegEx,
                   message: 'Please enter valid format +380 XX XXX XXXX',
                 },
               }}
