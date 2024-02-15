@@ -1,5 +1,5 @@
 import './CatalogPage.scss';
-import React, { memo, useContext } from 'react';
+import React, { useContext } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useActions } from '../../app/hooks';
 import { getSearchWith } from '../../helpers/searchHelpers';
@@ -12,7 +12,7 @@ import { PageSizeContext } from '../../storage/PageSizeContext';
 import { Loader } from '../../components/Loader';
 import { NoResults } from '../../components/NoResults';
 
-export const CatalogPage: React.FC = memo(() => {
+export const CatalogPage: React.FC = () => {
   const { setNotification } = useActions();
   const { isDesktopSize, isLaptopSize } = useContext(PageSizeContext);
   const [searchParams, setSearchParams] = useSearchParams();
@@ -34,6 +34,7 @@ export const CatalogPage: React.FC = memo(() => {
   const {
     data: filteredPets,
     isLoading: filterLoading,
+    isFetching: filterFetching,
   } = useGetFilterPetsQuery(params);
 
   if (petsLoadError) {
@@ -41,10 +42,6 @@ export const CatalogPage: React.FC = memo(() => {
       message: 'Something went wrong! Try later',
       color: NotificationStatus.Error,
     });
-  }
-
-  if (!pets && !filteredPets) {
-    return <Loader />;
   }
 
   const petsForList = isSearch ? filteredPets : pets;
@@ -56,7 +53,9 @@ export const CatalogPage: React.FC = memo(() => {
 
   return (
     <div className="catalog">
-      {(petsLoading || filterLoading) && <Loader />}
+      {(petsLoading
+        || filterLoading
+        || filterFetching) && <Loader />}
 
       <Container>
         {pets && (
@@ -110,4 +109,4 @@ export const CatalogPage: React.FC = memo(() => {
       </Container>
     </div>
   );
-});
+};
