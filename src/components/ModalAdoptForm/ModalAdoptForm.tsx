@@ -2,9 +2,7 @@ import './ModalAdoptForm.scss';
 import React, {
   memo, useCallback, useEffect, useRef, useState,
 } from 'react';
-import {
-  clearAllBodyScrollLocks, disableBodyScroll,
-} from 'body-scroll-lock';
+import { clearAllBodyScrollLocks, disableBodyScroll } from 'body-scroll-lock';
 import { ReactSVG } from 'react-svg';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { CSSTransition } from 'react-transition-group';
