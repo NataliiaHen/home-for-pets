@@ -53,10 +53,7 @@
   }
 
   &__button {
-    @include primary-button;
-    background-color: white;
-    border: 1px solid $primary-700;
-    color: $primary-900;
+    @include orange-button;
     max-width: 80px;
   }
 

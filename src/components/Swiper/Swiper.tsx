@@ -17,6 +17,10 @@ export const CardSwiper: React.FC<Props> = ({ pets }) => {
   const swiperRef = useRef<Swiper | null>(null);
 
   useEffect(() => {
+    if (swiperRef.current) {
+      swiperRef.current.destroy();
+    }
+
     swiperRef.current = new Swiper('.image-swiper', {
       direction: 'horizontal',
       modules: [Navigation, Grid, Keyboard],
@@ -71,7 +75,9 @@ export const CardSwiper: React.FC<Props> = ({ pets }) => {
         },
       },
     });
-  }, []);
+
+    swiperRef.current.slideTo(0);
+  }, [pets]);
 
   return (
     <div className="swiper-component">

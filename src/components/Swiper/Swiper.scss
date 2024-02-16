@@ -1,5 +1,9 @@
 @import "../../styles/style_utils";
 
+.swiper {
+  min-width: 0;
+}
+
 .swiper-component {
   position: relative;
   padding-inline: 16px;
@@ -13,12 +17,15 @@
   }
   
   @include onDesktop {
-    padding-left: calc(((100% - 1440px) / 2) + 60px);
-    padding-right: 0;
+    padding-inline: calc(((100% - 1440px) / 2) + 60px);
   }
 }
 
 .image-swiper {
+  &__wrapper {
+    display: flex; // Ensure swiper wrapper is a flex container
+  }
+
   &__buttons {
     display: flex;
     justify-content: center;
@@ -35,4 +42,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  max-width: 312px;
+  height: auto;
 }

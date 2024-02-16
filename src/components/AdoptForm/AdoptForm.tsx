@@ -25,6 +25,7 @@ import { nameRegEx, phoneRegEx } from '../../storage/patterns';
 export const AdoptForm: React.FC = memo(() => {
   const { setNotification } = useActions();
   const [isLoading, setIsLoading] = useState(false);
+  const [isSubmitSuccessful, setIsSubmitSuccessful] = useState(false);
   const [currentPhotoInput, setCurrentPhotoInput] = useState(0);
   const [addPet] = useAddNewPetMutation();
 
@@ -35,7 +36,7 @@ export const AdoptForm: React.FC = memo(() => {
     reset,
     getValues,
     formState: {
-      errors, isSubmitSuccessful,
+      errors,
     },
   } = useForm<PetFormData>({
     defaultValues: {
@@ -59,6 +60,7 @@ export const AdoptForm: React.FC = memo(() => {
           message: 'We contact you soon',
           color: NotificationStatus.Success,
         });
+        setIsSubmitSuccessful(true);
 
         setTimeout(() => {
           setCurrentPhotoInput(0);
@@ -95,7 +97,10 @@ export const AdoptForm: React.FC = memo(() => {
   );
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="adopt-form">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="adopt-form"
+    >
       {isLoading && <Loader />}
 
       <h2 className="adopt-form__title">Fill the information</h2>

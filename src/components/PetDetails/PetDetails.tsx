@@ -154,6 +154,7 @@ export const PetDetails: React.FC<Props> = memo(({ petId }) => {
 
               <div className="pet-details__buttons">
                 <AdoptBtn id={pet.id}>Adopt</AdoptBtn>
+
                 <ButtonHeart pet={pet} />
               </div>
             </div>

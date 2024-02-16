@@ -11,7 +11,7 @@ import { Loader } from '../../components/Loader';
 import { FavContext } from '../../storage/FavContext';
 
 export const Favourites: React.FC = memo(() => {
-  const { favoritePets } = useContext(FavContext);
+  const { favoritePets, removeAll } = useContext(FavContext);
   const {
     data: pets = [] as Pet[],
     isLoading: petsLoading,
@@ -25,18 +25,25 @@ export const Favourites: React.FC = memo(() => {
 
       <Container>
         <div className="favorites__content">
-
           {favoritePets.length > 0 ? (
             <>
               <div className="favorites__top">
                 <h1 className="favorites__title">
-                  Favourites
+                  Favorites
                 </h1>
 
                 <p className="favorites__text">
                   {`${favoritePets.length} items`}
                 </p>
               </div>
+
+              <button
+                type="button"
+                className="favorites__button"
+                onClick={removeAll}
+              >
+                Remove all
+              </button>
 
               <PetsList
                 pets={favoritePets}
@@ -73,6 +80,7 @@ export const Favourites: React.FC = memo(() => {
       {pets.length && (
         <PetsCarousel
           pets={pets}
+          favoritePets={favoritePets}
         />
       )}
     </div>

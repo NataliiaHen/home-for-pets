@@ -5,14 +5,25 @@ import { CardSwiper } from '../Swiper';
 import { Pet } from '../../types/Pet';
 import { Container } from '../Container';
 import { getRandomArray } from '../../helpers/getRandomArray';
+import { Loader } from '../Loader';
 
 type Props = {
   pets: Pet[];
+  favoritePets?: Pet[];
+  petShowId?: number;
 };
 
-export const PetsCarousel: React.FC<Props> = memo(({ pets }) => {
+export const PetsCarousel: React.FC<Props> = memo(({
+  pets, favoritePets, petShowId,
+}) => {
   const { pathname } = useLocation();
-  const randomPets = useMemo(() => pets && getRandomArray(pets, 20), [pets]);
+  const randomPets = useMemo(() => pets
+    && getRandomArray(pets, 20, favoritePets, petShowId),
+  [pets, favoritePets, petShowId]);
+
+  if (!randomPets) {
+    return <Loader />;
+  }
 
   return (
     <div className="pets-carousel">
@@ -36,7 +47,7 @@ export const PetsCarousel: React.FC<Props> = memo(({ pets }) => {
         </div>
       </Container>
 
-      {pets.length > 0 && (
+      {pets.length > 0 && randomPets.length > 0 && (
         <CardSwiper
           pets={randomPets}
         />

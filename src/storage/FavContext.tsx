@@ -10,12 +10,14 @@ export type Context = {
   favoritePets: Pet[];
   addFav: (Pet: Pet) => void;
   removeFav: (id: number) => void;
+  removeAll: () => void;
 };
 
 export const FavContext = React.createContext<Context>({
   favoritePets: [],
   addFav: () => { },
   removeFav: () => { },
+  removeAll: () => { },
 });
 
 type Props = {
@@ -54,10 +56,15 @@ export const FavProvider: React.FC<Props> = ({ children }) => {
     });
   };
 
+  const removeAll = () => {
+    setFavoritePets([]);
+  };
+
   const value = useMemo(() => ({
     favoritePets,
     addFav,
     removeFav,
+    removeAll,
   }), [favoritePets]);
 
   useEffect(() => {

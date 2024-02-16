@@ -239,3 +239,17 @@
     text-align: right;
   }
 }
+
+@mixin orange-button {
+  @include primary-button;
+  background-color: white;
+  border: 1px solid $primary-700;
+  color: $primary-900;
+
+  @include onLaptop {
+    &:hover {
+      color: $white;
+      background-color: $orange-button;
+    }
+  }
+}

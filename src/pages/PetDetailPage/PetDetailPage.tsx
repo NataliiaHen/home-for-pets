@@ -33,9 +33,10 @@ export const PetDetailPage: React.FC = memo(() => {
         </div>
       </Container>
 
-      {pets.length > 0 && (
+      {pets.length > 0 && petId && (
         <PetsCarousel
           pets={pets}
+          petShowId={+petId}
         />
       )}
     </div>

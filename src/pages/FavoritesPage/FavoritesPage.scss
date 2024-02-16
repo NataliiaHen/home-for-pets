@@ -39,4 +39,10 @@
       text-align: center;
     }
   }
+
+  &__button {
+    @include orange-button;
+    max-width: 150px;
+    margin-bottom: 40px;
+  }
 }
