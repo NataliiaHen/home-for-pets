@@ -49,20 +49,6 @@ const CustomSelect: React.FC<Props> = memo(({
     );
   };
 
-  // const CustomDropdownIndicator = (
-  //   props: DropdownIndicatorProps<SelectOption, true> & { menuIsOpen: boolean },
-  // ) => {
-  //   return (
-  //     <components.DropdownIndicator {...props}>
-  //       <ReactSVG
-  //         src={props.menuIsOpen
-  //           ? 'img/icon/arrow-up.svg'
-  //           : 'img/icon/arrow-down.svg'}
-  //       />
-  //     </components.DropdownIndicator>
-  //   );
-  // };
-
   const CustomDropdownIndicator = (
     props: DropdownIndicatorProps<SelectOption, true>,
   ) => {
@@ -85,7 +71,9 @@ const CustomSelect: React.FC<Props> = memo(({
       backgroundColor: 'inherit',
       cursor: 'pointer',
       border: '1px solid #D1D1D2',
-      borderColor: state.isFocused ? '#90B5FF' : '#D1D1D2',
+      borderColor: state.isFocused
+        ? '#90B5FF'
+        : '#D1D1D2',
       ':hover': {
         borderColor: '#0E5FFF',
       },

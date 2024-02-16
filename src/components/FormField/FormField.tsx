@@ -47,7 +47,7 @@ export const FormField: React.FC<FormFieldProps> = ({
       />
     )}
 
-    {error && <p className="form-field__error">{error.message}</p>}
+    {error && <span className="form-field__error">{error.message}</span>}
 
     {type === 'textarea'
       && !error

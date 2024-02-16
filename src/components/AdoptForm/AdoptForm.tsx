@@ -335,16 +335,17 @@ export const AdoptForm: React.FC = memo(() => {
                       placeholder="Choose age"
                       id="age"
                     />
-                    {errors?.post?.age && (
-                      <span className="adopt-form__error">
-                        {errors?.post?.age.message}
-                      </span>
-                    )}
                   </>
                 )}
                 rules={{ required: 'Age is required' }}
               />
             </div>
+
+            {errors?.post?.age && (
+              <span className="adopt-form__error">
+                {errors?.post?.age.message}
+              </span>
+            )}
           </div>
 
           <div className="adopt-form__field">
@@ -389,15 +390,16 @@ export const AdoptForm: React.FC = memo(() => {
                       clearPreview={isSubmitSuccessful}
                     />
                   ))}
-                  {errors.images && (
-                    <span className="adopt-form__error">
-                      {errors.images?.message}
-                    </span>
-                  )}
                 </div>
               )}
               rules={{ required: 'At least one photo is required' }}
             />
+
+            {errors.images && (
+              <span className="adopt-form__error">
+                {errors.images?.message}
+              </span>
+            )}
           </div>
         </div>
       </section>
