@@ -64,6 +64,7 @@ export const AdoptForm: React.FC = memo(() => {
 
         setTimeout(() => {
           setCurrentPhotoInput(0);
+          setIsSubmitSuccessful(false);
           reset();
         }, 200);
       })
@@ -222,13 +223,13 @@ export const AdoptForm: React.FC = memo(() => {
                   </Fragment>
                 );
               })}
-
-              {errors?.post?.animalType && (
-                <span className="adopt-form__error">
-                  {errors?.post?.animalType.message}
-                </span>
-              )}
             </div>
+
+            {errors?.post?.animalType && (
+              <span className="adopt-form__error">
+                {errors?.post?.animalType.message}
+              </span>
+            )}
           </div>
 
           <div className="adopt-form__field">
@@ -266,13 +267,13 @@ export const AdoptForm: React.FC = memo(() => {
                   </label>
                 </Fragment>
               ))}
-
-              {errors?.post?.gender && (
-                <span className="adopt-form__error">
-                  {errors?.post?.gender.message}
-                </span>
-              )}
             </div>
+
+            {errors?.post?.gender && (
+              <span className="adopt-form__error">
+                {errors?.post?.gender.message}
+              </span>
+            )}
           </div>
 
           <div className="adopt-form__field adopt-form__field--half-block">
