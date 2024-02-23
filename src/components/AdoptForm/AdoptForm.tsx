@@ -123,7 +123,7 @@ export const AdoptForm: React.FC = memo(() => {
                 },
                 maxLength: {
                   value: 30,
-                  message: 'Name must be less then 30 characters long',
+                  message: 'Name must be less than 30 characters long',
                 },
                 pattern: {
                   value: nameRegEx,
@@ -180,7 +180,7 @@ export const AdoptForm: React.FC = memo(() => {
                 },
                 maxLength: {
                   value: 30,
-                  message: 'Name must be less then 30 characters long',
+                  message: 'Name must be less than 30 characters long',
                 },
               })}
               error={errors?.post?.name}

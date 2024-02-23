@@ -34,8 +34,11 @@ export const ContactUsPage: React.FC = memo(() => {
 
             <li className="contact-us__info contact-us__info--write">
               <p className="contact-us__title">Write email</p>
-              <a href="mailto:pets_home@gmail.com" className="contact-us__link">
-                pets_home@gmail.com
+              <a
+                href="mailto:petshome.contactus@gmail.com"
+                className="contact-us__link"
+              >
+                petshome.contactus@gmail.com
               </a>
             </li>
           </ul>

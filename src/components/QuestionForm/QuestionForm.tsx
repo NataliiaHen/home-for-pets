@@ -88,7 +88,7 @@ export const QuestionForm: React.FC = memo(() => {
                         },
                         maxLength: {
                           value: 30,
-                          message: 'Name must be less then 30 characters long',
+                          message: 'Name must be less than 30 characters long',
                         },
                       })}
                     />

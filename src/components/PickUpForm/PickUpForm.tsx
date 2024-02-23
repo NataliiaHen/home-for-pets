@@ -75,7 +75,7 @@ export const PickUpForm: React.FC<Props> = memo(({ id, handleFormClose }) => {
                 },
                 maxLength: {
                   value: 30,
-                  message: 'Name must be less then 30 characters long',
+                  message: 'Name must be less than 30 characters long',
                 },
                 pattern: {
                   value: nameRegEx,

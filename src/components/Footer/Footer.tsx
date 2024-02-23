@@ -55,10 +55,10 @@ export const Footer: React.FC = memo(() => (
                 E-mail address
               </p>
               <a
-                href="mailto:pets_home@gmail.com"
+                href="mailto:petshome.contactus@gmail.com"
                 className="footer__contact-link"
               >
-                pets_home@gmail.com
+                petshome.contactus@gmail.com
               </a>
             </li>
           </ul>
