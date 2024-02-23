@@ -3,7 +3,7 @@ import { Pet } from '../types/Pet';
 import { PickUpFormFields } from '../types/PickUpForm';
 import { ContactForm } from '../types/ContactForm';
 
-export const BASE_API_URL = 'https://pets-home-e9b90f16b6b9.herokuapp.com';
+export const BASE_API_URL = 'https://pets-home-production.up.railway.app';
 
 const PET_PATH = 'animal_posts';
 
