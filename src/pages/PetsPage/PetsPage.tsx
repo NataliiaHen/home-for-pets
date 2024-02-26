@@ -1,7 +1,5 @@
 import './PetsPage.scss';
-import React, {
-  useCallback, useContext, useEffect, useState,
-} from 'react';
+import React, { useContext } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useActions } from '../../app/hooks';
 import { getSearchWith } from '../../helpers/searchHelpers';
@@ -12,7 +10,6 @@ import { Filters } from '../../components/Filters';
 import { PageSizeContext } from '../../storage/PageSizeContext';
 import { Loader } from '../../components/Loader';
 import { NoResults } from '../../components/NoResults';
-import { Catalog } from '../../components/Catalog';
 import { PetsList } from '../../components/PetsList';
 
 export const CatalogPage: React.FC = () => {
