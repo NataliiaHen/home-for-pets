@@ -1,41 +1,57 @@
-import './CatalogPage.scss';
-import React, { useContext } from 'react';
+import './PetsPage.scss';
+import React, { useContext, useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useActions } from '../../app/hooks';
 import { getSearchWith } from '../../helpers/searchHelpers';
 import { useGetFilterPetsQuery, useGetPetsQuery } from '../../api/apiSlice';
 import { NotificationStatus } from '../../types/Notification';
 import { Container } from '../../components/Container';
-import { PetsList } from '../../components/PetsList';
 import { Filters } from '../../components/Filters';
 import { PageSizeContext } from '../../storage/PageSizeContext';
 import { Loader } from '../../components/Loader';
 import { NoResults } from '../../components/NoResults';
+import { Catalog } from '../../components/Catalog';
 
 export const CatalogPage: React.FC = () => {
   const { setNotification } = useActions();
   const { isDesktopSize, isLaptopSize } = useContext(PageSizeContext);
+
+  // SearchParams
   const [searchParams, setSearchParams] = useSearchParams();
-  const {
-    data: pets,
-    isLoading: petsLoading,
-    isError: petsLoadError,
-  } = useGetPetsQuery();
+  const emptySearchParams = new URLSearchParams();
   const age = searchParams.get('age') || '';
   const gender = searchParams.get('gender') || '';
   const location = searchParams.get('location') || '';
   const animalType = searchParams.get('animalType') || '';
   const isSearch = age || gender || location || animalType;
-  const emptySearchParams = new URLSearchParams();
-  const data = {
+  const searchData = {
     age, animalType, gender, location,
   };
-  const params = getSearchWith(emptySearchParams, data);
+  const params = getSearchWith(emptySearchParams, searchData);
+
+  // Pagination
+  const [page, setPage] = useState(0);
+  const [itemsPerPage, setItemsPerPage] = useState(2);
+
+  // PetsData
   const {
-    data: filteredPets,
+    data: petsData,
+    isLoading: petsLoading,
+    isFetching: petsFetching,
+    isError: petsLoadError,
+  } = useGetPetsQuery({
+    page,
+    size: itemsPerPage,
+  });
+  const pets = petsData?.content;
+  const petsCount = petsData?.totalItems;
+  const {
+    data: filteredPetsData,
     isLoading: filterLoading,
     isFetching: filterFetching,
   } = useGetFilterPetsQuery(params);
+  const filteredPets = filteredPetsData?.content;
+  const petsForList = isSearch ? filteredPets : pets;
 
   if (petsLoadError) {
     setNotification({
@@ -44,25 +60,37 @@ export const CatalogPage: React.FC = () => {
     });
   }
 
-  const petsForList = isSearch ? filteredPets : pets;
-  const petCount = petsForList ? petsForList.length : 0;
-
   const showAllPets = () => {
     setSearchParams(undefined);
   };
+
+  const handlePageChange = (newPage: number) => {
+    setPage(newPage);
+  };
+
+  useEffect(() => {
+    if (isLaptopSize) {
+      setItemsPerPage(10);
+    }
+
+    if (isDesktopSize) {
+      setItemsPerPage(9);
+    }
+  }, [isLaptopSize, isDesktopSize]);
 
   return (
     <div className="catalog">
       {(petsLoading
         || filterLoading
+        || petsFetching
         || filterFetching) && <Loader />}
 
       <Container>
-        {pets && (
+        {petsData && (
           <div className="catalog__content">
             <div className="catalog__top-titles">
               <h2 className="catalog__title">Pick a friend</h2>
-              <p className="catalog__available-title">{`${petCount} friends available`}</p>
+              <p className="catalog__available-title">{`${petsCount} friends available`}</p>
             </div>
 
             {(isLaptopSize || isDesktopSize) && (
@@ -72,7 +100,14 @@ export const CatalogPage: React.FC = () => {
             )}
 
             <div className="catalog__pets">
-              {petsForList && <PetsList pets={petsForList} />}
+              {petsForList && (
+                <Catalog
+                  pets={petsForList}
+                  itemsPerPage={itemsPerPage}
+                  petsCount={petsData.totalItems}
+                  handlePageChange={handlePageChange}
+                />
+              )}
 
               {!petsForList?.length && isSearch
                 && !petsLoading && !filterLoading && (

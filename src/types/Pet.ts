@@ -19,6 +19,11 @@ export interface Pet {
   ];
 }
 
+export interface PetsData {
+  content: Pet[],
+  totalItems: number,
+}
+
 export interface Filters {
   age: AgeType;
   animalType: AnimalType;

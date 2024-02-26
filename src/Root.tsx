@@ -8,7 +8,7 @@ import { ErrorPage } from './pages/ErrorPage/ErrorPage';
 import { AdoptionPage } from './pages/AdoptionPage';
 import { ContactUsPage } from './pages/ContactUsPage';
 import { PetDetailPage } from './pages/PetDetailPage';
-import { CatalogPage } from './pages/CatalogPage';
+import { CatalogPage } from './pages/PetsPage';
 import { Favourites } from './pages/FavoritesPage';
 import { ModalAdoptForm } from './components/ModalAdoptForm';
 

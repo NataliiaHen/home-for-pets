@@ -13,17 +13,19 @@ export const PetsList: React.FC<Props> = memo(({ pets }) => {
   const { pathname } = useLocation();
 
   return (
-    <ul className={classNames(
-      'pets-list',
-      { 'pets-list--favorites': pathname === '/favorites' },
-    )}
-    >
-      {pets.map((pet) => (
-        <PetCard
-          key={pet.id}
-          pet={pet}
-        />
-      ))}
-    </ul>
+    <div className="pets-list__box">
+      <ul className={classNames(
+        'pets-list',
+        { 'pets-list--favorites': pathname === '/favorites' },
+      )}
+      >
+        {pets.map((pet) => (
+          <PetCard
+            key={pet.id}
+            pet={pet}
+          />
+        ))}
+      </ul>
+    </div>
   );
 });

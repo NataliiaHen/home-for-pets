@@ -13,9 +13,10 @@ import { FavContext } from '../../storage/FavContext';
 export const Favourites: React.FC = memo(() => {
   const { favoritePets, removeAll } = useContext(FavContext);
   const {
-    data: pets = [] as Pet[],
+    data: petsData,
     isLoading: petsLoading,
-  } = useGetPetsQuery();
+  } = useGetPetsQuery({ size: 10 });
+  const pets = petsData?.content || [] as Pet[];
 
   return (
     <div className="favorites">

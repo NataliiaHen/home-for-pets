@@ -11,9 +11,10 @@ import { Pet } from '../../types/Pet';
 
 export const HomePage: React.FC = () => {
   const {
-    data: pets = [] as Pet[],
+    data: petsData,
     isLoading: petsLoading,
-  } = useGetPetsQuery();
+  } = useGetPetsQuery({ size: 10 });
+  const pets = petsData?.content || [] as Pet[];
 
   return (
     <div className="home-page">

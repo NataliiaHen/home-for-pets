@@ -1,11 +1,17 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { Pet } from '../types/Pet';
+import { Pet, PetsData } from '../types/Pet';
 import { PickUpFormFields } from '../types/PickUpForm';
 import { ContactForm } from '../types/ContactForm';
 
 export const BASE_API_URL = 'https://pets-home-production.up.railway.app';
 
 const PET_PATH = 'animal_posts';
+
+type PageParams = {
+  page?: number,
+  size?: number,
+  sort?: string
+};
 
 export const apiSlice = createApi({
   reducerPath: 'api',
@@ -14,12 +20,18 @@ export const apiSlice = createApi({
   }),
   tagTypes: ['Pets'],
   endpoints: (builder) => ({
-    getPets: builder.query<Pet[], void | string>({
-      query: () => PET_PATH,
-      providesTags: (result: Pet[] | undefined) => {
+    getPets: builder.query<PetsData, PageParams | void>({
+      query: (params) => {
+        const page = params?.page || 0;
+        const size = params?.size || 9;
+        const sort = params?.sort || 'id,desc';
+
+        return `${PET_PATH}?page=${page}&sort=${sort}&size=${size}`;
+      },
+      providesTags: (result: PetsData | undefined) => {
         if (result) {
           return [
-            ...result.map(({ id }) => ({ type: 'Pets' as const, id })),
+            ...result.content.map(({ id }) => ({ type: 'Pets' as const, id })),
             { type: 'Pets', id: 'LIST' },
           ];
         }
@@ -27,7 +39,7 @@ export const apiSlice = createApi({
         return [{ type: 'Pets', id: 'LIST' }];
       },
     }),
-    getFilterPets: builder.query<Pet[], string>({
+    getFilterPets: builder.query<PetsData, string>({
       query: (searchParams) => `/${PET_PATH}/search?${searchParams}`,
     }),
     getPet: builder.query<Pet, number>({

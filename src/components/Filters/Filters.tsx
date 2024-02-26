@@ -17,7 +17,10 @@ type Props = {
 };
 
 export const Filters: React.FC<Props> = memo(({ closeMenu }) => {
-  const { data: pets } = useGetPetsQuery();
+  const {
+    data: petsData,
+  } = useGetPetsQuery();
+  const pets = petsData?.content;
   const [searchParams, setSearchParams] = useSearchParams();
   const age = searchParams.get('age') || '';
   const gender = searchParams.get('gender') || '';

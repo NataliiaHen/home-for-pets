@@ -11,9 +11,12 @@ import { Pet } from '../../types/Pet';
 export const PetDetailPage: React.FC = memo(() => {
   const { petId } = useParams();
   const {
-    data: pets = [] as Pet[],
+    data: petsData,
     isLoading: petsLoading,
-  } = useGetPetsQuery();
+  } = useGetPetsQuery({ size: 10 });
+  const pets = petsData
+    ? petsData?.content
+    : [] as Pet[];
 
   return (
     <div className="pet-page">

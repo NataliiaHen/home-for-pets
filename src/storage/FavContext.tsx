@@ -26,9 +26,12 @@ type Props = {
 
 export const FavProvider: React.FC<Props> = ({ children }) => {
   const {
-    data: pets = [] as Pet[],
+    data: petsData,
     isLoading,
   } = useGetPetsQuery();
+  const pets = petsData
+    ? petsData.content
+    : [] as Pet[];
   const [
     favoritePets, setFavoritePets,
   ] = useLocalStorage<Pet[]>('favoritePets', []);

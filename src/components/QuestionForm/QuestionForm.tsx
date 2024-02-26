@@ -123,12 +123,12 @@ export const QuestionForm: React.FC = memo(() => {
                           message: 'Please type at least 10 characters.',
                         },
                         maxLength: {
-                          value: 250,
-                          message: 'Please type less than 250 characters.',
+                          value: 300,
+                          message: 'Please type less than 300 characters.',
                         },
                       })}
                       characterCount={message?.length}
-                      maxCharacters={250}
+                      maxCharacters={300}
                     />
                   </div>
                 </div>
