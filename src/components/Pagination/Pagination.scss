@@ -6,6 +6,12 @@
   .page-item {
     border: 1px solid $primary-400;
     cursor: pointer;
+    background-color: $white;
+    transition: all 0.3s;
+
+    &:hover {
+      background-color: $primary-400;
+    }
   }
   
   .page-link {
@@ -19,6 +25,13 @@
   }
 
   .disabled {
+    background-color: $primary-300;
+    cursor: default;
+
+    &:hover {
+      background-color: $primary-300;
+    }
+
     & a {
       color: $primary-700;
     }
@@ -26,6 +39,10 @@
 
   .active {
     background-color: $blue-700;
+
+    &:hover {
+      background-color: $blue-700;
+    }
 
     & a {
       color: white;

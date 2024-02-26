@@ -71,7 +71,7 @@ export const PetCard: React.FC<Props> = memo(({ pet }) => {
               </div>
 
               <div className="pet-card__info-text">
-                {age}
+                {`${age} years`}
               </div>
             </div>
           </div>

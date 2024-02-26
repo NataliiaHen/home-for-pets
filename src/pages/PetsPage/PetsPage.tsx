@@ -1,5 +1,7 @@
 import './PetsPage.scss';
-import React, { useContext, useEffect, useState } from 'react';
+import React, {
+  useCallback, useContext, useEffect, useState,
+} from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useActions } from '../../app/hooks';
 import { getSearchWith } from '../../helpers/searchHelpers';
@@ -11,6 +13,7 @@ import { PageSizeContext } from '../../storage/PageSizeContext';
 import { Loader } from '../../components/Loader';
 import { NoResults } from '../../components/NoResults';
 import { Catalog } from '../../components/Catalog';
+import { PetsList } from '../../components/PetsList';
 
 export const CatalogPage: React.FC = () => {
   const { setNotification } = useActions();
@@ -30,8 +33,8 @@ export const CatalogPage: React.FC = () => {
   const params = getSearchWith(emptySearchParams, searchData);
 
   // Pagination
-  const [page, setPage] = useState(0);
-  const [itemsPerPage, setItemsPerPage] = useState(2);
+  // const [page, setPage] = useState(0);
+  // const [itemsPerPage, setItemsPerPage] = useState(2);
 
   // PetsData
   const {
@@ -39,10 +42,16 @@ export const CatalogPage: React.FC = () => {
     isLoading: petsLoading,
     isFetching: petsFetching,
     isError: petsLoadError,
-  } = useGetPetsQuery({
-    page,
-    size: itemsPerPage,
-  });
+  } = useGetPetsQuery();
+  // const {
+  //   data: petsData,
+  //   isLoading: petsLoading,
+  //   isFetching: petsFetching,
+  //   isError: petsLoadError,
+  // } = useGetPetsQuery({
+  //   page,
+  //   size: itemsPerPage,
+  // });
   const pets = petsData?.content;
   const petsCount = petsData?.totalItems;
   const {
@@ -64,19 +73,19 @@ export const CatalogPage: React.FC = () => {
     setSearchParams(undefined);
   };
 
-  const handlePageChange = (newPage: number) => {
-    setPage(newPage);
-  };
+  // const handlePageChange = useCallback((newPage: number) => {
+  //   setPage(newPage);
+  // }, []);
 
-  useEffect(() => {
-    if (isLaptopSize) {
-      setItemsPerPage(10);
-    }
+  // useEffect(() => {
+  //   if (isLaptopSize) {
+  //     setItemsPerPage(10);
+  //   }
 
-    if (isDesktopSize) {
-      setItemsPerPage(9);
-    }
-  }, [isLaptopSize, isDesktopSize]);
+  //   if (isDesktopSize) {
+  //     setItemsPerPage(9);
+  //   }
+  // }, [isLaptopSize, isDesktopSize]);
 
   return (
     <div className="catalog">
@@ -100,12 +109,17 @@ export const CatalogPage: React.FC = () => {
             )}
 
             <div className="catalog__pets">
-              {petsForList && (
+              {/* {petsForList && (
                 <Catalog
                   pets={petsForList}
                   itemsPerPage={itemsPerPage}
                   petsCount={petsData.totalItems}
                   handlePageChange={handlePageChange}
+                />
+              )} */}
+              {petsForList && (
+                <PetsList
+                  pets={petsForList}
                 />
               )}
 

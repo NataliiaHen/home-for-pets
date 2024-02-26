@@ -1,5 +1,5 @@
 import './Pagination.scss';
-import React from 'react';
+import React, { memo } from 'react';
 import ReactPaginate from 'react-paginate';
 
 type Props = {
@@ -7,7 +7,7 @@ type Props = {
   handlePageChange: (selected: number) => void,
 };
 
-export const Pagination: React.FC<Props> = ({
+export const Pagination: React.FC<Props> = memo(({
   pageCount, handlePageChange,
 }) => {
   const handleClick = (selectedItem: {
@@ -38,4 +38,4 @@ export const Pagination: React.FC<Props> = ({
       renderOnZeroPageCount={null}
     />
   );
-};
+});

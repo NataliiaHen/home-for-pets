@@ -1,5 +1,5 @@
 import './Catalog.scss';
-import React from 'react';
+import React, { memo, useMemo } from 'react';
 import { Pet } from '../../types/Pet';
 import { PetsList } from '../PetsList';
 import { Pagination } from '../Pagination';
@@ -11,10 +11,12 @@ type Props = {
   handlePageChange: (selected: number) => void,
 };
 
-export const Catalog: React.FC<Props> = ({
+export const Catalog: React.FC<Props> = memo(({
   pets, petsCount, itemsPerPage, handlePageChange,
 }) => {
-  const pageCount = Math.ceil(petsCount / itemsPerPage);
+  const pageCount = useMemo(() => {
+    return Math.ceil(petsCount / itemsPerPage);
+  }, [petsCount, itemsPerPage]);
 
   return (
     <div className="catalog">
@@ -28,4 +30,4 @@ export const Catalog: React.FC<Props> = ({
       )}
     </div>
   );
-};
+});
