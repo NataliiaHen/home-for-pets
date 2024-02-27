@@ -50,7 +50,7 @@ export const CatalogPage: React.FC = () => {
   //   size: itemsPerPage,
   // });
   const pets = petsData?.content;
-  const petsCount = petsData?.totalItems;
+  // const petsCount = petsData?.totalItems;
   const {
     data: filteredPetsData,
     isLoading: filterLoading,
@@ -96,7 +96,7 @@ export const CatalogPage: React.FC = () => {
           <div className="catalog__content">
             <div className="catalog__top-titles">
               <h2 className="catalog__title">Pick a friend</h2>
-              <p className="catalog__available-title">{`${petsCount} friends available`}</p>
+              <p className="catalog__available-title">{`${petsForList?.length} friends available`}</p>
             </div>
 
             {(isLaptopSize || isDesktopSize) && (
