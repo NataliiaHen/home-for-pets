@@ -40,7 +40,7 @@ export const Notification: React.FC = memo(() => {
   return (
     <CSSTransition
       in={show}
-      timeout={1000}
+      timeout={300}
       appear
       nodeRef={nodeRef}
       classNames="notification"

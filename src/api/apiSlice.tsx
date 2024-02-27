@@ -24,7 +24,7 @@ export const apiSlice = createApi({
       query: (params) => {
         const page = params?.page || 0;
         // const size = params?.size || 9;
-        const sort = params?.sort || 'id,desc';
+        const sort = params?.sort || 'id,asc';
 
         return `${PET_PATH}?page=${page}&sort=${sort}`;
       },
