@@ -1,6 +1,6 @@
-#Pets Home
+# Pets Home
 
-##Project Description:
+## Project Description:
 
 Brief Overview:
 Pets Home is an online platform dedicated to helping users find their perfect furry companions for adoption. The platform showcases a variety of pets, including cats and dogs, providing users with information about each animal's age, gender, and location. Explore the catalog to discover adorable pets waiting for their homes and make a difference in their lives.
